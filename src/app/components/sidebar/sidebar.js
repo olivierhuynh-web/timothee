@@ -13,7 +13,6 @@ const sidebar = () => {
   // ==================== USESTATE ====================
 
   const [timeline, setTimeline] = useState(null);
-  const bottomRef = useRef(null);
   // ==================== TIMELINE GSAP ====================
 
   useIsomorphicLayoutEffect(() => {
@@ -40,9 +39,13 @@ const sidebar = () => {
 
   // ==================== USEREFS ====================
 
+  const bottomRef = useRef(null);
+
   return (
     <div className={styles.sidebar__container}>
       <div className={styles.sidebar__container__header}>Header</div>
+      <hr className={styles.sidebar__container__separator} />
+
       <div ref={bottomRef} className={styles.sidebar__container__bottom}>
         Bottom
       </div>
