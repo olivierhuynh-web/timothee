@@ -8,11 +8,10 @@ import Main from './components/main/main';
 export default function Home() {
   return (
     <div className={styles.page}>
-      <main className={styles.main}>
-        {/* <Hero /> */}
+      <div className={styles.wrapper}>
         <Main />
         <Sidebar />
-      </main>
+      </div>
     </div>
   );
 }

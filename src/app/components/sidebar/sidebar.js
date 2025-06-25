@@ -29,9 +29,9 @@ const sidebar = () => {
   // animation d'entrée dans la sidebar
   useEffect(() => {
     const context = gsap.context(() => {
-      if (bottomRef.current) {
-        enlarge(bottomRef.current);
-      }
+      // if (bottomRef.current) {
+      //   enlarge(bottomRef.current);
+      // }
     });
 
     return () => context.revert();

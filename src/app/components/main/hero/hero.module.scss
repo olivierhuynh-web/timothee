@@ -1,0 +1,21 @@
+.elementForScroll {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.hero {
+  &__container {
+    position: relative;
+    width: 100%;
+    height: 500vh;
+    // overflow: hidden;
+
+    &__magazineImage {
+      position: absolute;
+      top: 50vh;
+      left: 50%;
+      opacity: 0.6;
+    }
+  }
+}
