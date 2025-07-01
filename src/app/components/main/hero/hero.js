@@ -52,6 +52,7 @@ const hero = () => {
           height={300}
           style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
           priority
+          className={styles.hero__container__welcomeImage}
           ref={welcomeImageRef}
         />
         <Image
@@ -59,7 +60,6 @@ const hero = () => {
           alt='Image de magazine'
           width={600}
           height={300}
-          style={{ width: '25%', height: 'auto', objectFit: 'contain' }}
           priority
           className={styles.hero__container__magazineImage}
           ref={magazineImageRef}

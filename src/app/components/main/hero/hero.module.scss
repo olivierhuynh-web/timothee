@@ -1,9 +1,3 @@
-.elementForScroll {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
 .hero {
   &__container {
     position: relative;
@@ -16,6 +10,33 @@
       top: 50vh;
       left: 50%;
       opacity: 0.6;
+      width: 25%; // L'image occupe 25% de la largeur du conteneur
+      height: auto; // Maintient le ratio d'aspect
+      object-fit: contain; //
     }
   }
 }
+
+@media (max-width: 768px) {
+  .hero {
+    &__container {
+      display: flex;
+      flex-direction: column;
+      width: 100vw;
+      height: 500vh;
+      // overflow: hidden;
+      &__welcomeImage {
+        display: none;
+      }
+      &__magazineImage {
+        padding: 2%;
+        top: 0;
+        left: 0;
+        width: 100%; // L'image prend toute la largeur de son conteneur
+        height: auto; // Ajuste la hauteur automatiquement pour conserver le ratio
+      }
+    }
+  }
+}
+
+// style={{ width: '25%', height: 'auto', objectFit: 'contain' }}

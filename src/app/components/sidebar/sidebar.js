@@ -3,6 +3,8 @@ import React from 'react';
 import { useLayoutEffect, useEffect, useState, useRef } from 'react';
 import styles from './sidebar.module.scss';
 import { gsap } from 'gsap';
+import Image from 'next/image';
+
 import { enlarge } from './animations';
 
 // ==================== USELAYOUTEFFECT ====================
@@ -47,7 +49,23 @@ const sidebar = () => {
       <hr className={styles.sidebar__container__separator} />
 
       <div ref={bottomRef} className={styles.sidebar__container__bottom}>
-        Bottom
+        <div className={styles.sidebar__container__bottom__container}>
+          <div className={styles.sidebar__container__bottom__container__paper}>
+            <p>
+              TC développe une pratique ouverte de l’édition qui se laisse
+              volontiers traverser par d’autres champs de l’art plastique tels
+              que la peinture, le dessin, le textile et l’installation.
+            </p>
+            <Image
+              src='/images/smile.png'
+              alt='Image de présentation de Timothée Casilli'
+              width={600}
+              height={300}
+              style={{ width: 'auto', height: '60%', objectFit: 'contain' }}
+              priority
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
