@@ -1,0 +1,12 @@
+.projectsInMain {
+  &__container {
+    &__image {
+      &__container {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}

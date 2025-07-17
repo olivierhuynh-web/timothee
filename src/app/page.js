@@ -48,15 +48,11 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <div className={styles.wrapper} ref={wrapperRef}>
-        <div onClick={handleMainClick} ref={mainRef} className={styles.main}>
-          <Main />
+        <div ref={mainRef} className={styles.main}>
+          <Main handleMainClick={handleMainClick} />
         </div>
-        <div
-          onClick={handleSidebarClick}
-          ref={sidebarRef}
-          className={styles.sidebar}
-        >
-          <Sidebar />
+        <div ref={sidebarRef} className={styles.sidebar}>
+          <Sidebar handleSidebarClick={handleSidebarClick} />
         </div>
         <div ref={articlesRef} className={styles.articles}>
           <Articles />

@@ -4,6 +4,7 @@ import { useLayoutEffect, useEffect, useState, useRef } from 'react';
 import styles from './sidebar.module.scss';
 import { gsap } from 'gsap';
 import Image from 'next/image';
+import database from '../../db/database.json'; // Importation du fichier JSON
 
 import { enlarge } from './animations';
 
@@ -11,7 +12,7 @@ import { enlarge } from './animations';
 const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
-const sidebar = () => {
+const sidebar = ({ handleSidebarClick }) => {
   // ==================== USESTATE ====================
 
   const [timeline, setTimeline] = useState(null);
@@ -45,9 +46,16 @@ const sidebar = () => {
 
   return (
     <div className={styles.sidebar__container}>
-      <div className={styles.sidebar__container__header}>Header</div>
+      <div className={styles.sidebar__container__header}>
+        <div
+          className={styles.sidebar__container__header__button}
+          onClick={handleSidebarClick}
+        >
+          Retour
+        </div>
+      </div>
+      <h2>{database.projects[0].name}</h2>
       <hr className={styles.sidebar__container__separator} />
-
       <div ref={bottomRef} className={styles.sidebar__container__bottom}>
         <div className={styles.sidebar__container__bottom__container}>
           <div className={styles.sidebar__container__bottom__container__paper}>
