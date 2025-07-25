@@ -2,8 +2,10 @@ import React from 'react';
 import database from '../../../db/database.json'; // Importation du fichier JSON
 import Image from 'next/image';
 import styles from './projectsInmain.module.scss';
+import { useRefs } from '../../../animations/context';
 
-const ProjectsInMain = ({ handleMainClick }) => {
+const ProjectsInMain = () => {
+  const { handleMainClick } = useRefs();
   return (
     <div>
       {database.projects.map((project, idx) => (

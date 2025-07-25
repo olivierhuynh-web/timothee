@@ -1,59 +1,37 @@
 'use client';
-import React from 'react';
-import { useLayoutEffect, useEffect, useState, useRef } from 'react';
+import React, { useRef } from 'react';
+import { motion } from 'framer-motion';
 import styles from './sidebar.module.scss';
-import { gsap } from 'gsap';
-import Image from 'next/image';
-import database from '../../db/database.json'; // Importation du fichier JSON
+import database from '../../db/database.json';
+import { useRefs } from '../../animations/context';
 
-import { enlarge } from './animations';
-
-// ==================== USELAYOUTEFFECT ====================
-const useIsomorphicLayoutEffect =
-  typeof window !== 'undefined' ? useLayoutEffect : useEffect;
-
-const sidebar = ({ handleSidebarClick }) => {
-  // ==================== USESTATE ====================
-
-  const [timeline, setTimeline] = useState(null);
-  // ==================== TIMELINE GSAP ====================
-
-  useIsomorphicLayoutEffect(() => {
-    let context = gsap.context(() => {
-      const tl = gsap.timeline();
-      setTimeline(tl);
-    });
-
-    return () => context.revert();
-  }, []);
-
-  // ==================== USEEFFECT ANIMATION ====================
-
-  // animation d'entrée dans la sidebar
-  useEffect(() => {
-    const context = gsap.context(() => {
-      // if (bottomRef.current) {
-      //   enlarge(bottomRef.current);
-      // }
-    });
-
-    return () => context.revert();
-  }, [timeline]);
-
-  // ==================== USEREFS ====================
-
+const Sidebar = () => {
+  const { isFlexStart, handleSidebarClick } = useRefs();
   const bottomRef = useRef(null);
 
   return (
     <div className={styles.sidebar__container}>
-      <div className={styles.sidebar__container__header}>
-        <div
+      <motion.div
+        className={styles.sidebar__container__header}
+        animate={{
+          justifyContent: isFlexStart ? 'flex-start' : 'flex-end', // Change justify-content
+        }}
+        transition={{
+          duration: 0.8,
+          delay: 0.5,
+          ease: [0, 0.71, 0.2, 1.01],
+        }}
+      >
+        <motion.button
           className={styles.sidebar__container__header__button}
-          onClick={handleSidebarClick}
+          onClick={handleSidebarClick} // Alterne l'alignement
+          // animate={{
+          //   scale: 1,
+          // }}
         >
-          Retour
-        </div>
-      </div>
+          {isFlexStart ? 'Retour' : 'Index'}
+        </motion.button>
+      </motion.div>{' '}
       <h2>{database.projects[0].name}</h2>
       <hr className={styles.sidebar__container__separator} />
       <div ref={bottomRef} className={styles.sidebar__container__bottom}>
@@ -64,14 +42,14 @@ const sidebar = ({ handleSidebarClick }) => {
               volontiers traverser par d’autres champs de l’art plastique tels
               que la peinture, le dessin, le textile et l’installation.
             </p>
-            <Image
+            {/* <Image
               src='/images/smile.png'
               alt='Image de présentation de Timothée Casilli'
               width={600}
               height={300}
               style={{ width: 'auto', height: '60%', objectFit: 'contain' }}
               priority
-            />
+            /> */}
           </div>
         </div>
       </div>
@@ -79,4 +57,4 @@ const sidebar = ({ handleSidebarClick }) => {
   );
 };
 
-export default sidebar;
+export default Sidebar;
