@@ -5,7 +5,7 @@ import Hero from './components/main/hero/hero';
 import Sidebar from './components/sidebar/sidebar';
 import Main from './components/main/main';
 import Articles from './components/articles/articles';
-import { RefsProvider, useRefs } from './animations/context';
+import { RefsProvider, useRefs, useProjectsScrollEffect } from './animations/context';
 
 function HomeContent() {
   const {
@@ -16,6 +16,9 @@ function HomeContent() {
     handleMainClick,
     handleSidebarClick,
   } = useRefs();
+  
+  // Activer l'effet de scroll pour les projets
+  useProjectsScrollEffect();
   return (
     <div className={styles.page}>
       <div className={styles.wrapper} ref={wrapperRef}>

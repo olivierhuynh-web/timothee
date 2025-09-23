@@ -1,46 +1,96 @@
 'use client';
-import React, { useRef } from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, useLayoutEffect, useEffect, useState } from 'react';
 import styles from './sidebar.module.scss';
 import database from '../../db/database.json';
 import { useRefs } from '../../animations/context';
+import { gsap } from 'gsap';
 
 const Sidebar = () => {
-  const { isFlexStart, handleSidebarClick } = useRefs();
+  const {
+    isMainOpen,
+    handleSidebarClick,
+    indexButtonRef,
+    // projectsListRef,
+    // projectsListScrollEffect,
+  } = useRefs();
   const bottomRef = useRef(null);
+
+  // ==================== USELAYOUTEFFECT ====================
+  const useIsomorphicLayoutEffect =
+    typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+
+  // ==================== USESTATE ====================
+
+  // const [timeline, setTimeline] = useState(null);
+
+  // ==================== TIMELINE GSAP ====================
+
+  // useIsomorphicLayoutEffect(() => {
+  //   let context = gsap.context(() => {
+  //     const tl = gsap.timeline();
+  //     setTimeline(tl);
+  //   });
+
+  //   return () => context.revert();
+  // }, []);
+
+  // ==================== USEEFFECT ANIMATION ====================
+
+  // animation d'entrée dans la sidebar
+  // useEffect(() => {
+  //   const context = gsap.context(() => {
+  //     // projectsListScrollEffect()
+  //   });
+
+  //   return () => context.revert();
+  // }, [timeline]);
 
   return (
     <div className={styles.sidebar__container}>
-      <motion.div
-        className={styles.sidebar__container__header}
-        animate={{
-          justifyContent: isFlexStart ? 'flex-start' : 'flex-end', // Change justify-content
-        }}
-        transition={{
-          duration: 0.8,
-          delay: 0.5,
-          ease: [0, 0.71, 0.2, 1.01],
-        }}
-      >
-        <motion.button
+      <div className={styles.sidebar__container__header}>
+        {/* <button
           className={styles.sidebar__container__header__button}
-          onClick={handleSidebarClick} // Alterne l'alignement
-          // animate={{
-          //   scale: 1,
-          // }}
+          onClick={handleSidebarClick}
+          ref={indexButtonRef}
         >
-          {isFlexStart ? 'Retour' : 'Index'}
-        </motion.button>
-      </motion.div>{' '}
-      <h2>{database.projects[0].name}</h2>
-      <hr className={styles.sidebar__container__separator} />
+          {isMainOpen ? 'Index' : 'Retour'}
+        </button> */}
+        <div className={styles.sidebar__container__header__firstline}>
+          <span>Timothée Casilli</span>
+          <div
+            className={
+              styles.sidebar__container__header__firstline__seconditems
+            }
+          >
+            <div>Paris, France</div>
+            <div>timotheeclp@gmail.com</div>
+          </div>
+          <div
+            className={styles.sidebar__container__header__firstline__thirditems}
+          >
+            <div>Instagram</div>
+            <div>CV</div>
+          </div>{' '}
+        </div>
+        {/* Paris, France timotheeclp@gmail.com Instagram CV */}
+      </div>
+
+      {/* <div ref={projectsListRef}></div> */}
+      {/* <hr className={styles.sidebar__container__separator} /> */}
       <div ref={bottomRef} className={styles.sidebar__container__bottom}>
         <div className={styles.sidebar__container__bottom__container}>
           <div className={styles.sidebar__container__bottom__container__paper}>
             <p>
               TC développe une pratique ouverte de l’édition qui se laisse
               volontiers traverser par d’autres champs de l’art plastique tels
-              que la peinture, le dessin, le textile et l’installation.
+              que la peinture, le dessin, le textile et l’installation. Il
+              travaille avec des textes de natures parfois très différentes pour
+              leur trouver un fil narratif commun travers l’expérience de
+              lecture par laquelle il les présente. Son travail commence souvent
+              au point de tension qui amène une lec- ture vers la suivante. Il a
+              coeur de faire dialoguer cette aspiration artistique avec sa
+              pratique concrète du graphisme, en nourrissant ces deux parties
+              l’une avec l’autre.
             </p>
             {/* <Image
               src='/images/smile.png'
