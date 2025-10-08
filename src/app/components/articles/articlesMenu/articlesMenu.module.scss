@@ -1,0 +1,44 @@
+.articlesMenu {
+  &__container {
+    background-color: #fafafa;
+    position: absolute;
+    top: 0;
+    width: 10vw;
+    height: 100vh;
+    left: 0;
+    z-index: 2;
+    border-right: 0.5px solid black;
+    &__projectList {
+      &__container {
+        &__wrapper {
+          display: flex;
+          flex-direction: column;
+          // align-items: flex-end;
+          .projectName {
+            text-align: right;
+            padding: 8px 16px;
+            margin: 4px 0;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+
+            &:hover {
+              background-color: rgba(255, 255, 255, 0.1);
+            }
+
+            &.selected {
+              background-color: #4caf50; // Couleur de surbrillance
+              color: white;
+              font-weight: 500;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+              &:hover {
+                background-color: #3e8e41; // Couleur plus foncée au survol
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

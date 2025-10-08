@@ -2,6 +2,7 @@ import { useLayoutEffect, useEffect, useState } from 'react';
 import styles from './main.module.scss';
 import Hero from './hero/hero';
 import ProjectsInMain from './projectsInMain/projectsInMain';
+import Stickers from './stickers/stickers';
 import { useRefs } from '../../animations/context';
 import { gsap } from 'gsap';
 
@@ -32,8 +33,8 @@ const main = () => {
 
   return (
     <div className={styles.main__container}>
+      <Stickers />
       <Hero />
-      {/* On retire le <div ref={projectsListRef}></div> */}
       <ProjectsInMain handleMainClick={handleMainClick} />
     </div>
   );

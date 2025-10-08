@@ -23,4 +23,11 @@
   color: red;
   width: auto;
   margin-left: auto; // pousse à droite dans un flex
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; // aligne tous les enfants à droite
+
+  &div {
+    text-align: right; // aligne le texte à droite pour chaque titre
+  }
 }

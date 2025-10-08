@@ -1,0 +1,38 @@
+.stickersContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; // Permet les clics à travers les stickers
+  z-index: 1; // S'assurer que c'est en dessous du contenu interactif mais au-dessus du fond
+
+  .sticker {
+    position: absolute;
+    will-change: transform; // Optimisation des performances
+    transition: transform 0.3s ease-out; // Animation fluide au redimensionnement
+    
+    img {
+      filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2)); // Ombre portée pour un effet de profondeur
+      transition: transform 0.3s ease;
+    }
+
+    &:hover {
+      img {
+        transform: scale(1.1); // Léger effet de zoom au survol
+        filter: drop-shadow(4px 8px 12px rgba(0, 0, 0, 0.3)); // Ombre plus prononcée au survol
+      }
+    }
+  }
+}
+
+// Style pour les écrans plus petits
+@media (max-width: 768px) {
+  .stickersContainer {
+    .sticker {
+      // Réduire légèrement la taille des stickers sur mobile
+      width: 80px !important;
+      height: 80px !important;
+    }
+  }
+}

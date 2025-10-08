@@ -5,7 +5,9 @@ import styles from './projectsInmain.module.scss';
 import { useRefs } from '../../../animations/context';
 
 const ProjectsInMain = ({ handleMainClick }) => {
-  const { projectPicturesRefs, projectsListRef } = useRefs();
+  const { projectPicturesRefs, projectsListRef, handleProjectClick } = useRefs();
+
+  // wrapperRef, articlesRef
 
   return (
     <section className={styles.projectsInMain__container}>
@@ -25,7 +27,11 @@ const ProjectsInMain = ({ handleMainClick }) => {
               alt={`Image de ${project.name}`}
               style={{ width: '60%', height: 'auto', objectFit: 'contain' }}
               priority
-              onClick={handleMainClick}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleProjectClick(project.id);
+                handleMainClick();
+              }}
             />
           </div>
         ))}

@@ -1,19 +1,42 @@
-/* :root {
+:root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+} */
+
+/* Smooth scrolling with Lenis */
+html.lenis {
+  height: auto;
 }
 
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Base styles */
 html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  scroll-behavior: auto !important; /* Override any other scroll behaviors */
 }
 
 body {

@@ -1,7 +1,11 @@
-.main {
-  // &__container {
-  //   width: 60%;
-  //   background-color: #fafafa;
-  //   overflow-y: auto;
-  // }
+.main__container {
+  background-color: #fafafa;
+  height: 100vh;
+
+  overflow: auto; /* ou scroll */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE et Edge Legacy */
+}
+.main__container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari et Opera */
 }

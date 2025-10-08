@@ -4,6 +4,7 @@ import styles from './sidebar.module.scss';
 import database from '../../db/database.json';
 import { useRefs } from '../../animations/context';
 import { gsap } from 'gsap';
+import Link from 'next/link';
 
 const Sidebar = () => {
   const {
@@ -63,12 +64,18 @@ const Sidebar = () => {
             }
           >
             <div>Paris, France</div>
-            <div>timotheeclp@gmail.com</div>
+            <div>
+              <a href='mailto:timotheeclp@gmail.com'>timotheeclp@gmail.com</a>
+            </div>
           </div>
           <div
             className={styles.sidebar__container__header__firstline__thirditems}
           >
-            <div>Instagram</div>
+            <div>
+              <a href='https://www.instagram.com/timothee.casilli/'>
+                Instagram
+              </a>
+            </div>
             <div>CV</div>
           </div>{' '}
         </div>
@@ -87,7 +94,7 @@ const Sidebar = () => {
               travaille avec des textes de natures parfois très différentes pour
               leur trouver un fil narratif commun travers l’expérience de
               lecture par laquelle il les présente. Son travail commence souvent
-              au point de tension qui amène une lec- ture vers la suivante. Il a
+              au point de tension qui amène une lecture vers la suivante. Il a
               coeur de faire dialoguer cette aspiration artistique avec sa
               pratique concrète du graphisme, en nourrissant ces deux parties
               l’une avec l’autre.
