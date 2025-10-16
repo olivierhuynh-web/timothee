@@ -2,17 +2,18 @@ import React from 'react';
 import styles from './articles.module.scss';
 import ArticlesMenu from './articlesMenu/articlesMenu';
 import Image from 'next/image';
-import database from '../../db/database.json';
 import { useRefs } from '../../animations/context';
+import Stickers from '../main/stickers/stickers';
 
-const articles = () => {
-  const { openedProject } = useRefs();
-  
+const Articles = () => {
+  const { openedProject, database } = useRefs();
+
   // Trouve le projet correspondant à l'ID dans openedProject, ou le premier projet par défaut
   const project = database.projects.find(p => p.id === openedProject) || database.projects[0];
 
   return (
     <div className={styles.articles}>
+      <Stickers />
       <div className={styles.articles__container}>
         <div className={styles.articles__container__wrapper}>
           <div className={styles.articles__project}>
@@ -44,4 +45,4 @@ const articles = () => {
   );
 };
 
-export default articles;
+export default Articles;

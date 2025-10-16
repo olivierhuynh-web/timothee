@@ -1,4 +1,6 @@
-//! IMPORT GSAP
+/**
+ * Context pour gérer les refs et l'état global des animations
+ */
 import React, {
   createContext,
   useContext,
@@ -8,10 +10,16 @@ import React, {
 } from 'react';
 import database from '../db/database.json';
 import { gsap } from 'gsap';
+import {
+  createProjectLine,
+  updateProjectStyles as updateStyles,
+  findHighestVisibleProjectIndex,
+  shouldRemoveProject,
+  createScrollHandler,
+  ANIMATION_DURATION,
+} from './projectsScrollHelpers';
 
 const RefsContext = createContext(null);
-
-//! USEREFS
 
 export function RefsProvider({ children }) {
   const mainRef = useRef(null);
@@ -24,23 +32,20 @@ export function RefsProvider({ children }) {
   const projectPicturesRefs = useRef([]);
   const articlesMenuRef = useRef(null);
 
-  //! USESTATE
-
+  // États
   const [isMainOpen, setIsMainOpen] = useState(true);
   const [openedProject, setOpenedProject] = useState(null);
 
   // Gère le clic sur un projet
   const handleProjectClick = (projectId) => {
     setOpenedProject(projectId);
-    console.log(`Projet sélectionné : ${projectId}`);
   };
 
-  //TODO: ANIMATION ARTICLES MENU (A REVOIR)
+  // Animation du menu articles : slide de gauche à droite selon l'état isMainOpen
   const slideArticlesMenu = (show) => {
     if (!articlesMenuRef.current) return;
 
     if (show) {
-      // Animation d'apparition (de gauche à droite)
       gsap.to(articlesMenuRef.current, {
         delay: 0.7,
         left: '0',
@@ -48,34 +53,29 @@ export function RefsProvider({ children }) {
         ease: 'power2.out',
       });
     } else {
-      // Animation de disparition (vers la gauche)
       gsap.to(articlesMenuRef.current, {
         left: '-10vw',
         duration: 0.5,
         ease: 'power2.in',
-        // onComplete: () => {
-        //   console.log('Animation de disparition terminée');
-        // },
       });
     }
   };
 
   // Effet pour déclencher l'animation quand isMainOpen change
   useEffect(() => {
-    // Inversé : on veut que le menu apparaisse quand isMainOpen est false
+    // Inversé : le menu apparaît quand isMainOpen est false
     slideArticlesMenu(!isMainOpen);
   }, [isMainOpen]);
 
-  //! HANDLERS
+  // Gestionnaires d'événements
   const handleMainClick = () => {
-    setIsMainOpen(false); // on ferme le main
+    setIsMainOpen(false);
     slideToTheRightOnTheScreen(wrapperRef, articlesRef);
   };
 
   const handleArticlesMenuClick = () => {
     setIsMainOpen(true);
     slideToTheLeftOnTheScreen(wrapperRef, articlesRef);
-    // animateArticlesMenu;
   };
 
   return (
@@ -92,7 +92,7 @@ export function RefsProvider({ children }) {
         projectPicturesRefs,
         articlesMenuRef,
 
-        // State
+        // État
         isMainOpen,
         openedProject,
         database,
@@ -101,7 +101,7 @@ export function RefsProvider({ children }) {
         setIsMainOpen,
         setOpenedProject,
 
-        // Handlers
+        // Gestionnaires
         handleMainClick,
         handleArticlesMenuClick,
         handleProjectClick,
@@ -116,14 +116,16 @@ export function useRefs() {
   return useContext(RefsContext);
 }
 
-// Hook personnalisé pour l'effet de scroll
+/**
+ * Hook personnalisé pour l'effet de scroll des projets
+ */
 export function useProjectsScrollEffect() {
   const { projectPicturesRefs, projectsListRef, database } = useRefs();
 
   useEffect(() => {
     let cleanup;
 
-    // Attendre que les refs soient prêtes
+    // Attend que les refs soient prêtes
     const timer = setTimeout(() => {
       cleanup = projectsListScrollEffect(
         projectPicturesRefs,
@@ -139,7 +141,9 @@ export function useProjectsScrollEffect() {
   }, [projectPicturesRefs, projectsListRef, database]);
 }
 
-// Animation pour ouvrir le main (fermer la sidebar)
+/**
+ * Animation pour faire glisser l'écran vers la droite (ouvre la section Articles)
+ */
 export function slideToTheRightOnTheScreen(wrapperRef, articlesRef) {
   gsap.to(wrapperRef.current, {
     x: '-100vw',
@@ -153,6 +157,9 @@ export function slideToTheRightOnTheScreen(wrapperRef, articlesRef) {
   });
 }
 
+/**
+ * Animation pour faire glisser l'écran vers la gauche (ferme la section Articles)
+ */
 export function slideToTheLeftOnTheScreen(wrapperRef, articlesRef) {
   gsap.to(wrapperRef.current, {
     delay: 1,
@@ -162,15 +169,16 @@ export function slideToTheLeftOnTheScreen(wrapperRef, articlesRef) {
   });
   gsap.to(articlesRef.current, {
     delay: 1,
-
-    width: '0vw', // ou la largeur initiale souhaitée
+    width: '0vw',
     duration: 0.5,
     ease: 'power2.inOut',
   });
 }
 
-//! EFFET DE SCROLL SUR LE MAIN (POUR LA LISTE DES PROJETS)
-
+/**
+ * Effet de scroll pour la liste des projets
+ * Gère l'affichage dynamique des titres de projets lors du scroll
+ */
 export function projectsListScrollEffect(
   projectPicturesRefs,
   projectsListRef,
@@ -178,119 +186,60 @@ export function projectsListScrollEffect(
 ) {
   if (!projectPicturesRefs.current || !projectsListRef.current) return;
 
-  // Pour garder la trace des projets affichés
   const displayedProjects = new Set();
-  let ticking = false;
 
-  // Fonction pour mettre à jour les styles des projets affichés
-  const updateProjectStyles = () => {
-    const projectLines = Array.from(projectsListRef.current.children);
-    const total = projectLines.length;
-
-    projectLines.forEach((line, i) => {
-      const isLast = i === total - 1;
-
-      // Appliquer les styles
-      line.style.opacity = isLast ? '1' : '0.6'; // Opacité réduite pour les éléments non sélectionnés
-      // line.style.transform = isLast ? 'scale(1)' : 'scale(0.95)';
-      // line.style.fontWeight = isLast ? '600' : '400';
-      line.style.color = isLast ? 'black' : '#0000007b'; // Rouge plus clair pour les éléments non sélectionnés
-    });
-  };
-
-  // Fonction pour ajouter un projet
+  // Ajoute un projet à la liste affichée
   const addProject = (index) => {
     if (displayedProjects.has(index) || !database.projects[index]) return;
 
     displayedProjects.add(index);
-
-    // Créer un nouvel élément ligne
-    const line = document.createElement('div');
-    line.className = 'project-line';
-    line.textContent = database.projects[index].name;
-    line.style.opacity = '0';
-    line.style.transform = 'translateY(10px)';
-    line.style.transition = 'all 0.3s ease';
-    line.dataset.projectIndex = index;
-
-    // Ajouter la classe pour l'animation
-    line.classList.add('appearing');
-
-    // Ajouter la ligne au conteneur
+    const line = createProjectLine(database.projects[index], index);
     projectsListRef.current.appendChild(line);
-
-    // Mettre à jour les styles après l'ajout
-    updateProjectStyles();
+    updateStyles(projectsListRef);
   };
 
-  // Fonction pour supprimer un projet
+  // Retire un projet de la liste affichée
   const removeProject = (index) => {
     if (!displayedProjects.has(index)) return;
 
     const line = projectsListRef.current.querySelector(
       `[data-project-index="${index}"]`
     );
+
     if (line) {
-      // Animation de disparition
       line.style.opacity = '0';
       line.style.transform = 'translateY(-10px)';
-      line.style.pointerEvents = 'none'; // Désactiver les interactions pendant l'animation
+      line.style.pointerEvents = 'none';
 
-      // Suppression après l'animation
       setTimeout(() => {
         if (line.parentNode === projectsListRef.current) {
           projectsListRef.current.removeChild(line);
           displayedProjects.delete(index);
-          // Mettre à jour les styles des projets restants
-          updateProjectStyles();
+          updateStyles(projectsListRef);
         }
-      }, 300);
+      }, ANIMATION_DURATION);
     }
   };
 
-  // Fonction pour gérer la visibilité des projets
+  // Gère la visibilité des projets selon le scroll
   const handleVisibility = (isScrollingUp = false) => {
-    // Trouver l'index du projet le plus haut actuellement visible
-    let highestVisibleIndex = -1;
+    const highestVisibleIndex = findHighestVisibleProjectIndex(
+      projectPicturesRefs
+    );
 
-    // Parcourir les projets du haut vers le bas
-    for (let i = 0; i < projectPicturesRefs.current.length; i++) {
-      const ref = projectPicturesRefs.current[i];
-      if (!ref) continue;
-
-      const rect = ref.getBoundingClientRect();
-      // Ajuster ces valeurs pour contrôler quand le titre apparaît
-      // Plus la valeur est proche de 0.5, plus le titre apparaîtra tard
-      const visibilityThreshold = 0.3; // 30% de la hauteur de l'écran
-      const isVisible =
-        rect.top <= window.innerHeight * (1 - visibilityThreshold) &&
-        rect.bottom >= window.innerHeight * visibilityThreshold;
-
-      if (isVisible) {
-        highestVisibleIndex = i;
-      }
-    }
-
-    // Si on a trouvé un projet visible
     if (highestVisibleIndex !== -1) {
-      // Ajouter tous les projets jusqu'à highestVisibleIndex
+      // Ajouter tous les projets visibles
       for (let i = 0; i <= highestVisibleIndex; i++) {
         if (database.projects[i]) {
           addProject(i);
         }
       }
 
-      // Supprimer les projets qui ne devraient plus être affichés
-      // On supprime un projet uniquement si on scroll vers le haut et qu'il est au-dessus de la zone visible
+      // Retirer les projets non visibles lors du scroll vers le haut
       if (isScrollingUp) {
         Array.from(displayedProjects).forEach((index) => {
           const ref = projectPicturesRefs.current[index];
-          if (!ref) return;
-
-          const rect = ref.getBoundingClientRect();
-          const isBelowViewport = rect.top > window.innerHeight * 0.1; // 10% du haut de l'écran
-
-          if (index > highestVisibleIndex && isBelowViewport) {
+          if (shouldRemoveProject(ref, highestVisibleIndex, index)) {
             removeProject(index);
           }
         });
@@ -298,36 +247,19 @@ export function projectsListScrollEffect(
     }
   };
 
-  // Gestion du scroll avec debounce et suivi de la direction
-  const handleScroll = () => {
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        const currentScroll = window.scrollY;
-        const isScrollingUp = window.previousScroll > currentScroll;
-        window.previousScroll = currentScroll;
+  const handleScroll = createScrollHandler(handleVisibility);
 
-        handleVisibility(isScrollingUp);
-        ticking = false;
-      });
-      ticking = true;
-    }
-  };
-
-  // Configuration de l'observateur
+  // Configuration de l'IntersectionObserver
   const observer = new IntersectionObserver(handleVisibility, {
     threshold: 0.1,
     rootMargin: '-10% 0% -10% 0%',
   });
 
-  // Observer chaque image de projet
   projectPicturesRefs.current.forEach((ref) => {
     if (ref) observer.observe(ref);
   });
 
-  // Ajouter les écouteurs d'événements
   window.addEventListener('scroll', handleScroll, { passive: true });
-
-  // Vérifier la visibilité au chargement initial
   handleVisibility();
 
   // Nettoyage

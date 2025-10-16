@@ -1,13 +1,11 @@
 import React from 'react';
-import database from '../../../db/database.json';
 import Image from 'next/image';
-import styles from './projectsInmain.module.scss';
+import styles from './projectsInMain.module.scss';
 import { useRefs } from '../../../animations/context';
 
 const ProjectsInMain = ({ handleMainClick }) => {
-  const { projectPicturesRefs, projectsListRef, handleProjectClick } = useRefs();
-
-  // wrapperRef, articlesRef
+  const { projectPicturesRefs, projectsListRef, handleProjectClick, database } =
+    useRefs();
 
   return (
     <section className={styles.projectsInMain__container}>

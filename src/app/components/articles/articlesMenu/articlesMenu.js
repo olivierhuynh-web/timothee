@@ -1,13 +1,13 @@
 import { useRefs } from '../../../animations/context';
 import styles from './articlesMenu.module.scss';
-import database from '../../../db/database.json';
 
 const ArticlesMenu = () => {
-  const { 
-    articlesMenuRef, 
-    handleArticlesMenuClick, 
-    openedProject, 
-    setOpenedProject 
+  const {
+    articlesMenuRef,
+    handleArticlesMenuClick,
+    openedProject,
+    setOpenedProject,
+    database,
   } = useRefs();
   
   // Gère le clic sur un projet dans le menu

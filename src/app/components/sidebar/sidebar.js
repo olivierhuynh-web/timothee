@@ -1,61 +1,15 @@
 'use client';
-import React, { useRef, useLayoutEffect, useEffect, useState } from 'react';
+import { useRef } from 'react';
 import styles from './sidebar.module.scss';
-import database from '../../db/database.json';
-import { useRefs } from '../../animations/context';
-import { gsap } from 'gsap';
-import Link from 'next/link';
+import Stickers from '../main/stickers/stickers';
 
 const Sidebar = () => {
-  const {
-    isMainOpen,
-    handleSidebarClick,
-    indexButtonRef,
-    // projectsListRef,
-    // projectsListScrollEffect,
-  } = useRefs();
   const bottomRef = useRef(null);
-
-  // ==================== USELAYOUTEFFECT ====================
-  const useIsomorphicLayoutEffect =
-    typeof window !== 'undefined' ? useLayoutEffect : useEffect;
-
-  // ==================== USESTATE ====================
-
-  // const [timeline, setTimeline] = useState(null);
-
-  // ==================== TIMELINE GSAP ====================
-
-  // useIsomorphicLayoutEffect(() => {
-  //   let context = gsap.context(() => {
-  //     const tl = gsap.timeline();
-  //     setTimeline(tl);
-  //   });
-
-  //   return () => context.revert();
-  // }, []);
-
-  // ==================== USEEFFECT ANIMATION ====================
-
-  // animation d'entrée dans la sidebar
-  // useEffect(() => {
-  //   const context = gsap.context(() => {
-  //     // projectsListScrollEffect()
-  //   });
-
-  //   return () => context.revert();
-  // }, [timeline]);
 
   return (
     <div className={styles.sidebar__container}>
+      <Stickers count={8} />
       <div className={styles.sidebar__container__header}>
-        {/* <button
-          className={styles.sidebar__container__header__button}
-          onClick={handleSidebarClick}
-          ref={indexButtonRef}
-        >
-          {isMainOpen ? 'Index' : 'Retour'}
-        </button> */}
         <div className={styles.sidebar__container__header__firstline}>
           <span>Timothée Casilli</span>
           <div
@@ -77,13 +31,10 @@ const Sidebar = () => {
               </a>
             </div>
             <div>CV</div>
-          </div>{' '}
+          </div>
         </div>
-        {/* Paris, France timotheeclp@gmail.com Instagram CV */}
       </div>
 
-      {/* <div ref={projectsListRef}></div> */}
-      {/* <hr className={styles.sidebar__container__separator} /> */}
       <div ref={bottomRef} className={styles.sidebar__container__bottom}>
         <div className={styles.sidebar__container__bottom__container}>
           <div className={styles.sidebar__container__bottom__container__paper}>
@@ -97,16 +48,8 @@ const Sidebar = () => {
               au point de tension qui amène une lecture vers la suivante. Il a
               coeur de faire dialoguer cette aspiration artistique avec sa
               pratique concrète du graphisme, en nourrissant ces deux parties
-              l’une avec l’autre.
+              l'une avec l'autre.
             </p>
-            {/* <Image
-              src='/images/smile.png'
-              alt='Image de présentation de Timothée Casilli'
-              width={600}
-              height={300}
-              style={{ width: 'auto', height: '60%', objectFit: 'contain' }}
-              priority
-            /> */}
           </div>
         </div>
       </div>

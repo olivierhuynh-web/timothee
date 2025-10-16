@@ -1,14 +1,24 @@
 :root {
-  --background: #ffffff;
+  /* Light Mode Variables */
+  --background: #fafafa;
   --foreground: #171717;
+  --text-primary: #000000;
+  --text-secondary: #666666;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --shadow: rgba(0, 0, 0, 0.08);
+  --card-background: #e6e6e6;
 }
 
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
+[data-theme='dark'] {
+  /* Dark Mode Variables */
+  --background: #252525;
+  --foreground: #ededed;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --border-color: rgba(255, 255, 255, 0.15);
+  --shadow: rgba(0, 0, 0, 0.4);
+  --card-background: #333333;
+}
 
 /* Smooth scrolling with Lenis */
 html.lenis {
@@ -132,7 +142,9 @@ html, body {
   padding: 0;
   box-sizing: border-box;
   overscroll-behavior: none;
-  background: #fafafa;
+  background: var(--background);
+  color: var(--foreground);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body {

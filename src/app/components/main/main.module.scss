@@ -1,8 +1,10 @@
 .main__container {
-  background-color: #fafafa;
+  position: relative;
+  background-color: var(--background);
   height: 100vh;
+  transition: background-color 0.3s ease;
 
-  overflow: auto; /* ou scroll */
+  overflow: auto;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE et Edge Legacy */
 }
