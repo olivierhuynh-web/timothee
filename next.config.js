@@ -1,36 +1,30 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  turbopack: {},
-  reactStrictMode: true, // Active le mode strict de React pour détecter les problèmes potentiels
+  turbopack: {}, // Active Turbopack proprement
+  reactStrictMode: true,
+
   images: {
-    domains: ['example.com', 'cdn.example.com', 'picsum.photos'], // Ajout de picsum.photos
+    domains: ['example.com', 'cdn.example.com', 'picsum.photos'],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'example.com',
-        pathname: '/images/**', // Autorise les images provenant de ce chemin
+        pathname: '/images/**',
       },
       {
         protocol: 'https',
         hostname: 'cdn.example.com',
-        pathname: '/assets/**', // Autorise les images provenant de ce chemin
+        pathname: '/assets/**',
       },
     ],
   },
-  webpack: (config) => {
-    // Ajoutez des configurations Webpack personnalisées ici
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ['@svgr/webpack'], // Permet d'importer des fichiers SVG comme composants React
-    });
-    return config;
-  },
+
   async redirects() {
     return [
       {
         source: '/old-route',
         destination: '/new-route',
-        permanent: true, // Redirection permanente (code 301)
+        permanent: true,
       },
     ];
   },
