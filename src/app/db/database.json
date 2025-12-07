@@ -2,42 +2,82 @@
   "projects": [
     {
       "id": "1",
-      "name": "Figure Story", 
+      "name": "Figure Story",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "pictures" : [
-        "https://picsum.photos/seed/picsum/300/150",
-        "https://picsum.photos/seed/picsum/600/300",
-        "https://picsum.photos/seed/picsum/600/300"
+      "pictures": [
+        {
+          "url": "https://picsum.photos/seed/picsum/300/150",
+          "caption": "Vue d'ensemble du projet Figure Story"
+        },
+        {
+          "url": "https://picsum.photos/seed/picsum/300/150",
+          "caption": "Détail typographique et composition"
+        },
+        {
+          "url": "https://picsum.photos/seed/picsum/600/300",
+          "caption": "Mise en page et grille de construction"
+        },
+        {
+          "url": "https://picsum.photos/seed/picsum/600/300",
+          "caption": "Déclinaison visuelle du concept"
+        }
       ]
     },
     {
       "id": "2",
-      "name": "Survol", 
+      "name": "Survol",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "pictures" : [
-        "https://picsum.photos/seed/picsum/300/150",
-        "https://picsum.photos/seed/picsum/600/300",
-        "https://picsum.photos/seed/picsum/600/300"
+      "pictures": [
+        {
+          "url": "https://picsum.photos/seed/picsum/300/150",
+          "caption": "Concept initial du projet Survol"
+        },
+        {
+          "url": "https://picsum.photos/seed/picsum/600/300",
+          "caption": "Exploration des formes et textures"
+        },
+        {
+          "url": "https://picsum.photos/seed/picsum/600/300",
+          "caption": "Version finale et mise en contexte"
+        }
       ]
     },
-        {
+    {
       "id": "3",
-      "name": "Perfectly Conditioned Eyes", 
+      "name": "Perfectly Conditioned Eyes",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "pictures" : [
-        "https://picsum.photos/seed/picsum/300/150",
-        "https://picsum.photos/seed/picsum/600/300",
-        "https://picsum.photos/seed/picsum/600/300"
+      "pictures": [
+        {
+          "url": "https://picsum.photos/seed/picsum/300/150",
+          "caption": "Recherche visuelle et premiers croquis"
+        },
+        {
+          "url": "https://picsum.photos/seed/picsum/600/300",
+          "caption": "Développement du langage graphique"
+        },
+        {
+          "url": "https://picsum.photos/seed/picsum/600/300",
+          "caption": "Application et déclinaisons multiples"
+        }
       ]
     },
     {
       "id": "4",
-      "name": "Ma façon de couper les oranges", 
+      "name": "Ma façon de couper les oranges",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "pictures" : [
-        "https://picsum.photos/seed/picsum/300/150",
-        "https://picsum.photos/seed/picsum/600/300",
-        "https://picsum.photos/seed/picsum/600/300"
+      "pictures": [
+        {
+          "url": "https://picsum.photos/seed/picsum/300/150",
+          "caption": "Étude préliminaire et esquisse"
+        },
+        {
+          "url": "https://picsum.photos/seed/picsum/600/300",
+          "caption": "Processus de création et expérimentation"
+        },
+        {
+          "url": "https://picsum.photos/seed/picsum/600/300",
+          "caption": "Résultat final et présentation"
+        }
       ]
     }
   ]

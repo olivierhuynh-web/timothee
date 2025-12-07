@@ -3,6 +3,28 @@
   width: 100vw;
   overflow: hidden;
 }
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.animatedSticker {
+  position: absolute;
+  will-change: transform, opacity;
+  pointer-events: none;
+  opacity: 0.9;
+
+  // img {
+  //   filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2));
+  // }
+}
 .wrapper {
   display: flex;
   height: 100vh;

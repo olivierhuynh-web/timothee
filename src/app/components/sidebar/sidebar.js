@@ -2,13 +2,33 @@
 import { useRef } from 'react';
 import styles from './sidebar.module.scss';
 import Stickers from '../main/stickers/stickers';
+import SectionClickStickers from '../SectionClickStickers';
 
-const Sidebar = () => {
+const Sidebar = ({ onLinkClick, clickStickers }) => {
   const bottomRef = useRef(null);
+
+  // Gestionnaire de clic pour les liens
+  const handleLinkClick = (e) => {
+    e.preventDefault();
+
+    // Récupère l'URL du lien
+    const linkUrl = e.currentTarget.href;
+
+    // Récupère les dimensions de la page entière
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    // Appelle la fonction parent pour ajouter des stickers et passe l'URL
+    if (onLinkClick) {
+      onLinkClick(width, height, linkUrl);
+    }
+  };
 
   return (
     <div className={styles.sidebar__container}>
-      <Stickers count={8} />
+      {/* <Stickers count={8} /> */}
+      <SectionClickStickers clickStickers={clickStickers} />
+
       <div className={styles.sidebar__container__header}>
         <div className={styles.sidebar__container__header__firstline}>
           <span>Timothée Casilli</span>
@@ -19,14 +39,19 @@ const Sidebar = () => {
           >
             <div>Paris, France</div>
             <div>
-              <a href='mailto:timotheeclp@gmail.com'>timotheeclp@gmail.com</a>
+              <a href='mailto:timotheeclp@gmail.com' onClick={handleLinkClick}>
+                timotheeclp@gmail.com
+              </a>
             </div>
           </div>
           <div
             className={styles.sidebar__container__header__firstline__thirditems}
           >
             <div>
-              <a href='https://www.instagram.com/timothee.casilli/'>
+              <a
+                href='https://www.instagram.com/timothee.casilli/'
+                onClick={handleLinkClick}
+              >
                 Instagram
               </a>
             </div>
