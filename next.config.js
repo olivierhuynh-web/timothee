@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  turbopack: {},
   reactStrictMode: true, // Active le mode strict de React pour détecter les problèmes potentiels
   images: {
     domains: ['example.com', 'cdn.example.com', 'picsum.photos'], // Ajout de picsum.photos
