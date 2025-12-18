@@ -60,10 +60,10 @@ function projectsListScrollEffect(
     const highestVisibleIndex =
       findHighestVisibleProjectIndex(projectPicturesRefs);
 
-    if (highestVisibleIndex !== -1) {
-      // Mettre à jour le state avec l'index du projet visible
-      setVisibleProjectIndex(highestVisibleIndex);
+    // Mettre à jour le state avec l'index du projet visible (ou -1 si aucun)
+    setVisibleProjectIndex(highestVisibleIndex);
 
+    if (highestVisibleIndex !== -1) {
       // Ajouter tous les projets visibles
       for (let i = 0; i <= highestVisibleIndex; i++) {
         if (database.projects[i]) {

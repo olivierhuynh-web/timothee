@@ -23,7 +23,10 @@ function HomeContent() {
     projectPicturesRefs,
     projectsListRef,
     database,
+    visibleProjectIndex,
     setVisibleProjectIndex,
+    currentProjectDescription,
+    setCurrentProjectDescription,
   } = useRefs();
 
   const { distributeStickers } = effectsOnLinkClick();
@@ -43,6 +46,15 @@ function HomeContent() {
     database,
     setVisibleProjectIndex
   );
+
+  // Synchroniser la description du projet avec le projet visible
+  useEffect(() => {
+    if (visibleProjectIndex !== null && visibleProjectIndex >= 0 && database.projects[visibleProjectIndex]) {
+      setCurrentProjectDescription(database.projects[visibleProjectIndex].description);
+    } else {
+      setCurrentProjectDescription('');
+    }
+  }, [visibleProjectIndex, database, setCurrentProjectDescription]);
 
   // Fonction pour ajouter des stickers (appelée depuis Sidebar)
   const handleAddStickers = (width, height, linkUrl) => {
@@ -147,7 +159,11 @@ function HomeContent() {
           <Main clickStickers={mainClickStickers} />
         </div>
         <div ref={sidebarRef} className={styles.sidebar}>
-          <Sidebar onLinkClick={handleAddStickers} clickStickers={sidebarClickStickers} />
+          <Sidebar
+            onLinkClick={handleAddStickers}
+            clickStickers={sidebarClickStickers}
+            projectDescription={currentProjectDescription}
+          />
         </div>
         <div ref={articlesRef} className={styles.articles}>
           <Articles clickStickers={articlesClickStickers} />

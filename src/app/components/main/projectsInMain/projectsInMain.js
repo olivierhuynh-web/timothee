@@ -10,7 +10,6 @@ const ProjectsInMain = ({ handleMainClick }) => {
     handleProjectClick,
     database,
     projectsInMainRef,
-    placeholderRef,
   } = useRefs();
 
   return (
@@ -18,11 +17,6 @@ const ProjectsInMain = ({ handleMainClick }) => {
       className={styles.projectsInMain__container}
       ref={projectsInMainRef}
     >
-      <img
-        src='https://placehold.co/600x400'
-        alt='Placeholder'
-        ref={placeholderRef}
-      />
       <div className={styles.projectsList} ref={projectsListRef}></div>
       <div className={styles.projectsInMain__images}>
         {database.projects.map((project, idx) => (

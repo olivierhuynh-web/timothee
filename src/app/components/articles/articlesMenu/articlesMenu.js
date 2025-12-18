@@ -38,6 +38,7 @@ const ArticlesMenu = () => {
                       isSelected ? styles.selected : ''
                     }`}
                     onClick={(e) => handleProjectClick(project.id, e)}
+                    data-no-sticker
                   >
                     {project.name}
                   </span>

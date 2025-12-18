@@ -25,6 +25,7 @@ export function RefsProvider({ children }) {
   const [isMainOpen, setIsMainOpen] = useState(true);
   const [openedProject, setOpenedProject] = useState(null);
   const [visibleProjectIndex, setVisibleProjectIndex] = useState(null);
+  const [currentProjectDescription, setCurrentProjectDescription] = useState('');
   // const [scrollPositions, setScrollPositions] = useState({});
 
   // Gère le clic sur un projet
@@ -67,12 +68,14 @@ export function RefsProvider({ children }) {
         isMainOpen,
         openedProject,
         visibleProjectIndex,
+        currentProjectDescription,
         database,
 
         // Setters
         setIsMainOpen,
         setOpenedProject,
         setVisibleProjectIndex,
+        setCurrentProjectDescription,
 
         // Gestionnaires
         handleMainClick,

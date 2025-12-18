@@ -17,12 +17,13 @@
 
 .projectsList {
   position: sticky;
-  top: 0;
+  top: -0.55%;
   right: 0;
 
   color: red;
   width: auto;
   margin-left: auto; // pousse à droite dans un flex
+  margin-right: 1%;
   display: flex;
   flex-direction: column;
   align-items: flex-end; // aligne tous les enfants à droite

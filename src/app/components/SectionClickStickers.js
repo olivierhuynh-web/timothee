@@ -1,11 +1,44 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import gsap from 'gsap';
 import styles from './SectionClickStickers.module.scss';
 
 const SectionClickStickers = ({ clickStickers }) => {
   const overlayRef = useRef(null);
+  const [containerHeight, setContainerHeight] = useState('100%');
+
+  // Calcule dynamiquement la hauteur du conteneur parent scrollable
+  useEffect(() => {
+    const updateHeight = () => {
+      if (overlayRef.current && overlayRef.current.parentElement) {
+        const parent = overlayRef.current.parentElement;
+        const scrollHeight = parent.scrollHeight;
+        setContainerHeight(`${scrollHeight}px`);
+      }
+    };
+
+    // Mise à jour initiale
+    updateHeight();
+
+    // Mise à jour lors du resize de la fenêtre
+    window.addEventListener('resize', updateHeight);
+
+    // Observer les changements de DOM pour détecter les modifications de contenu
+    const observer = new MutationObserver(updateHeight);
+    if (overlayRef.current && overlayRef.current.parentElement) {
+      observer.observe(overlayRef.current.parentElement, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+      });
+    }
+
+    return () => {
+      window.removeEventListener('resize', updateHeight);
+      observer.disconnect();
+    };
+  }, []);
 
   // Anime l'apparition des stickers au clic
   useEffect(() => {
@@ -37,7 +70,11 @@ const SectionClickStickers = ({ clickStickers }) => {
   }, [clickStickers]);
 
   return (
-    <div ref={overlayRef} className={styles.sectionOverlay}>
+    <div
+      ref={overlayRef}
+      className={styles.sectionOverlay}
+      style={{ height: containerHeight }}
+    >
       {clickStickers.map((sticker) => (
         <div
           key={sticker.id}
