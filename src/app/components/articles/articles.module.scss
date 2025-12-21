@@ -9,14 +9,10 @@
     align-items: center;
     width: 100vw;
     height: 100vh;
-    padding-top: 10vh;
-    padding-bottom: 2vh;
     &__wrapper {
-      // margin-left: 10vw; // To account for the articlesMenu width
-      width: 75vw;
-      // height: 85vh;
-      height: 100%;
-      max-height: auto;
+      width: 60vw;
+      height: 70%;
+      // max-height: auto;
       background-color: var(--card-background);
       transition: background-color 0.3s ease;
       // padding: 5%;
@@ -24,21 +20,18 @@
       align-items: center;
       &__project {
         height: 100%;
+        display: flex;
+        flex-direction: column;
 
         &__images {
-          height: 100%;
+          flex: 1; // Prend l'espace disponible
           width: auto;
           display: flex;
           justify-content: center;
-          // align-items: center;
-          background-color: red;
+          align-items: center;
+          overflow: hidden; // Pour éviter le débordement
         }
       }
-      // h1 {
-      //   display: flex;
-      //   justify-content: center;
-      //   align-items: center;
-      // }
     }
   }
 }

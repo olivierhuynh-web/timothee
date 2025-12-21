@@ -6,55 +6,68 @@
       "description": "FIGURE STORY Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
       "pictures": [
         {
-          "url": "/images/projets/ii_mixg72x48.jpeg",
+          "id"  : "1",
+          "url": "/images/projets/figure-story/ii_mixg72x48.jpeg",
           "caption": "Vue d'ensemble du projet Figure Story"
         },
         {
-          "url": "/images/projets/ii_mixg72we1.jpeg",
+          "id"  : "2",
+          "url": "/images/projets/figure-story/ii_mixg72we1.jpeg",
           "caption": "Détail typographique et composition"
         },
         {
-          "url": "/images/projets/ii_mixg72wi2.jpeg",
+          "id"  : "3",
+          "url": "/images/projets/figure-story/ii_mixg72wi2.jpeg",
           "caption": "Mise en page et grille de construction"
         },
         {
-          "url": "/images/projets/ii_mixg72wm3.jpeg",
+          "id"  : "4",
+          "url": "/images/projets/figure-story/ii_mixg72wm3.jpeg",
           "caption": "Déclinaison visuelle du concept"
         },
         {
-          "url": "/images/projets/ii_mixg72wp4.jpeg",
+          "id"  : "5",
+          "url": "/images/projets/figure-story/ii_mixg72wp4.jpeg",
           "caption": "Exploration des formes et couleurs"
         },
         {
-          "url": "/images/projets/ii_mixg72wt5.jpeg",
+          "id"  : "6",
+          "url": "/images/projets/figure-story/ii_mixg72wt5.jpeg",
           "caption": "Variations graphiques"
         },
         {
-          "url": "/images/projets/ii_mixg72ww6.jpeg",
+          "id"  : "7",  
+          "url": "/images/projets/figure-story/ii_mixg72ww6.jpeg",
           "caption": "Application du système visuel"
         },
         {
-          "url": "/images/projets/ii_mixg72x07.jpeg",
+          "id"  : "8",  
+          "url": "/images/projets/figure-story/ii_mixg72x07.jpeg",
           "caption": "Composition finale"
         },
         {
-          "url": "/images/projets/ii_mixg72x80.jpeg",
+          "id"  : "9",
+          "url": "/images/projets/figure-story/ii_mixg72x48.jpeg",
           "caption": "Mise en contexte du projet"
         },
         {
-          "url": "/images/projets/ii_mixg72x89.jpeg",
+          "id"  : "10",
+          "url": "/images/projets/figure-story/ii_mixg72x89.jpeg",
           "caption": "Développement conceptuel"
         },
         {
-          "url": "/images/projets/ii_mixg72xb10.jpeg",
+          "id"  : "11",
+          "url": "/images/projets/figure-story/ii_mixg72xb10.jpeg",
           "caption": "Étude de la charte graphique"
         },
         {
-          "url": "/images/projets/ii_mixg72xg11.jpeg",
+          "id"  : "12",
+          "url": "/images/projets/figure-story/ii_mixg72xg11.jpeg",
           "caption": "Présentation des déclinaisons"
         },
         {
-          "url": "/images/projets/ii_mixg72xj12.jpeg",
+          "id"  : "13",
+          "url": "/images/projets/figure-story/ii_mixg72xj12.jpeg",
           "caption": "Résultat final du projet"
         }
       ]
