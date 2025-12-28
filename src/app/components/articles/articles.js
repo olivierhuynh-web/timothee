@@ -9,6 +9,7 @@ import SectionClickStickers from '../SectionClickStickers';
 const Articles = ({ clickStickers = [] }) => {
   const { openedProject, database } = useRefs();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [cursorDirection, setCursorDirection] = useState('default');
 
   // Trouve le projet correspondant à l'ID dans openedProject, ou le premier projet par défaut
   const project =
@@ -19,6 +20,21 @@ const Articles = ({ clickStickers = [] }) => {
   useEffect(() => {
     setCurrentImageIndex(0);
   }, [openedProject]);
+
+  // Gestionnaire de mouvement de souris pour changer le curseur
+  const handleMouseMove = (e) => {
+    const container = e.currentTarget;
+    const rect = container.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const containerWidth = rect.width;
+    const mousePercentage = (mouseX / containerWidth) * 100;
+
+    if (mousePercentage < 50) {
+      setCursorDirection('w-resize'); // Flèche vers la gauche
+    } else {
+      setCursorDirection('e-resize'); // Flèche vers la droite
+    }
+  };
 
   // Gestionnaire de clic pour la navigation entre les images
   const handleImageClick = (e) => {
@@ -68,28 +84,52 @@ const Articles = ({ clickStickers = [] }) => {
       <div className={styles.articles__container}>
         <div className={styles.articles__container__wrapper} data-no-sticker>
           <div className={styles.articles__container__wrapper__project}>
-            <div>
-              <span>{project.pictures[currentImageIndex].caption}</span>
+            <div
+              className={styles.articles__container__wrapper__project__heading}
+            >
+              <span>{project.pictures[currentImageIndex].heading}</span>
             </div>
             <div
               className={styles.articles__container__wrapper__project__images}
               onClick={handleImageClick}
-              style={{ cursor: 'pointer' }}
+              onMouseMove={handleMouseMove}
+              style={{
+                cursor: cursorDirection,
+                position: 'relative',
+                width: '100%',
+                height: '100%',
+              }}
             >
               <Image
-                width={600}
-                height={300}
+                fill
                 src={project.pictures[currentImageIndex].url}
-                alt={`Image du projet ${project.pictures[currentImageIndex].caption}`}
+                alt={`Image du projet ${project.pictures[currentImageIndex].heading}`}
                 style={{
-                  width: 'auto',
-                  height: 'auto',
                   objectFit: 'contain',
                 }}
+                sizes='(max-width: 768px) 100vw, 90vw'
                 priority
               />
             </div>
-            <p>{project.description}</p>
+            <div
+              className={styles.articles__container__wrapper__project__captions}
+            >
+              {project.pictures[currentImageIndex].captions?.map(
+                (caption, index) => {
+                  const parts = caption.split(',');
+                  const firstPart = parts[0];
+                  const rest = parts.slice(1).join(',');
+                  const isUntitled = firstPart.trim() === '(non titré)';
+
+                  return (
+                    <p key={index}>
+                      {isUntitled ? firstPart : <i>{firstPart}</i>}
+                      {rest && `,${rest}`}
+                    </p>
+                  );
+                }
+              )}
+            </div>
           </div>
         </div>
       </div>

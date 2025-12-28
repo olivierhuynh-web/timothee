@@ -40,7 +40,7 @@ const SectionClickStickers = ({ clickStickers }) => {
     };
   }, []);
 
-  // Anime l'apparition des stickers au clic
+  // Anime l'apparition des stickers au clic et leur disparition après 2s
   useEffect(() => {
     if (clickStickers.length > 0 && overlayRef.current) {
       const newClickStickers = Array.from(
@@ -52,19 +52,30 @@ const SectionClickStickers = ({ clickStickers }) => {
       if (newClickStickers.length > 0) {
         newClickStickers.forEach((sticker) => {
           sticker.setAttribute('data-animated', 'true');
-        });
 
-        gsap.fromTo(
-          newClickStickers,
-          {
-            opacity: 0,
-          },
-          {
-            opacity: 1,
-            duration: 0.4,
-            ease: 'back.out(1.7)',
-          }
-        );
+          // Animation d'apparition
+          gsap.fromTo(
+            sticker,
+            {
+              opacity: 0,
+            },
+            {
+              opacity: 1,
+              duration: 0.4,
+              ease: 'back.out(1.7)',
+              // Après 2 secondes, anime la disparition
+              onComplete: () => {
+                setTimeout(() => {
+                  gsap.to(sticker, {
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: 'power2.out',
+                  });
+                }, 2000);
+              },
+            }
+          );
+        });
       }
     }
   }, [clickStickers]);

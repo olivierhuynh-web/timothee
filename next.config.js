@@ -4,7 +4,6 @@ const nextConfig = {
   reactStrictMode: true,
 
   images: {
-    domains: ['example.com', 'cdn.example.com', 'picsum.photos'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -15,6 +14,11 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'cdn.example.com',
         pathname: '/assets/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+        pathname: '/**',
       },
     ],
   },

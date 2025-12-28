@@ -70,17 +70,15 @@ function projectsListScrollEffect(
           addProject(i);
         }
       }
-
-      // Retirer les projets non visibles lors du scroll vers le haut
-      if (isScrollingUp) {
-        Array.from(displayedProjects).forEach((index) => {
-          const ref = projectPicturesRefs.current[index];
-          if (shouldRemoveProject(ref, highestVisibleIndex, index)) {
-            removeProject(index);
-          }
-        });
-      }
     }
+
+    // Toujours vérifier et retirer les projets non visibles
+    Array.from(displayedProjects).forEach((index) => {
+      const ref = projectPicturesRefs.current[index];
+      if (shouldRemoveProject(ref, highestVisibleIndex, index)) {
+        removeProject(index);
+      }
+    });
   };
 
   const handleScroll = createScrollHandler(handleVisibility);

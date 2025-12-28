@@ -10,12 +10,6 @@ export const useClickStickers = (sectionRef, sectionName) => {
     if (!sectionRef?.current) return;
 
     const handleClick = (e) => {
-      // Vérifie si le clic est sur un élément qui ne doit pas avoir de sticker
-      const noStickerElement = e.target.closest('[data-no-sticker]');
-      if (noStickerElement) {
-        return; // Ignore le clic
-      }
-
       // Sélectionne un sticker aléatoire
       const randomSticker = stickerPaths[Math.floor(Math.random() * stickerPaths.length)];
 
@@ -43,65 +37,6 @@ export const useClickStickers = (sectionRef, sectionName) => {
 
       const x = e.clientX - rect.left - 50; // Position relative à la section
       const y = e.clientY - rect.top + scrollTop - 50; // Inclut le scroll
-
-      // Vérifie si le sticker (100px) chevauche une zone interdite
-      const stickerSize = 100;
-      const marginPx = 0; // Pas de marge verticale
-      const marginVw = 0; // Pas de marge horizontale
-      const stickerRect = {
-        left: x,
-        right: x + stickerSize,
-        top: y,
-        bottom: y + stickerSize
-      };
-
-      // Cherche tous les éléments avec data-no-sticker dans la section
-      const noStickerElements = sectionRef.current.querySelectorAll('[data-no-sticker]');
-      for (const element of noStickerElements) {
-        const elementRect = element.getBoundingClientRect();
-        const elementTopRelative = elementRect.top - rect.top + scrollTop;
-        const elementBottomRelative = elementTopRelative + elementRect.height;
-        const elementLeftRelative = elementRect.left - rect.left;
-        const elementRightRelative = elementLeftRelative + elementRect.width;
-
-        // Agrandit la zone interdite avec la marge (horizontale en vw, verticale en px)
-        const forbiddenZone = {
-          left: elementLeftRelative - marginVw,
-          right: elementRightRelative + marginVw,
-          top: elementTopRelative - marginPx,
-          bottom: elementBottomRelative + marginPx
-        };
-
-        // Vérifie le chevauchement
-        const overlaps = !(
-          stickerRect.right < forbiddenZone.left ||
-          stickerRect.left > forbiddenZone.right ||
-          stickerRect.bottom < forbiddenZone.top ||
-          stickerRect.top > forbiddenZone.bottom
-        );
-
-        if (overlaps) {
-          console.log('🚫 Sticker bloqué:', {
-            marginPx: marginPx + 'px',
-            marginVw: marginVw + 'px (1vw)',
-            stickerRect,
-            forbiddenZone,
-            overlaps
-          });
-          return; // Bloque la création du sticker
-        }
-      }
-
-      // DEBUG
-      console.log('🎯 Click Debug:', {
-        sectionName,
-        'e.clientY': e.clientY,
-        'rect.top': rect.top,
-        'scrollTop parent': sectionRef.current.scrollTop,
-        'scrollTop enfant': scrollingElement.scrollTop,
-        'y calculé': y,
-        'Element qui scroll': scrollingElement.className
-      });
 
       // Crée le nouveau sticker
       const newSticker = {

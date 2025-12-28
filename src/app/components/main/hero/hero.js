@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import styles from './hero.module.scss';
 // import { gsap } from 'gsap';
@@ -25,9 +25,20 @@ const Hero = () => {
           alt='Image de bienvenue'
           width={600}
           height={300}
-          style={{ width: '50%', height: 'auto', objectFit: 'contain' }}
+          style={{ width: '30%', height: 'auto', objectFit: 'contain' }}
           priority
           className={styles.hero__container__welcomeImage}
+          // ref={welcomeImageRef}
+        />
+
+        <Image
+          src='/images/face.jpeg'
+          alt='Image de bienvenue'
+          width={600}
+          height={300}
+          style={{ width: '30%', height: 'auto', objectFit: 'contain' }}
+          priority
+          className={styles.hero__container__secondImage}
           // ref={welcomeImageRef}
         />
       </div>

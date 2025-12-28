@@ -25,20 +25,25 @@ const ProjectsInMain = ({ handleMainClick }) => {
             className={styles.projectsInMain__container__image__container}
             ref={(el) => (projectPicturesRefs.current[idx] = el)}
           >
-            <Image
-              width={150}
-              height={300}
-              className='welcomeImage'
-              src={project.pictures[0].url}
-              alt={`Image de ${project.name}`}
-              style={{ width: '60%', height: 'auto', objectFit: 'contain' }}
-              priority
-              onClick={(e) => {
-                e.stopPropagation();
-                handleProjectClick(project.id);
-                handleMainClick();
-              }}
-            />
+            <div className={styles.imageWrapper}>
+              <div className={styles.imageShadow}></div>
+              <div className={styles.imageContent}>
+                <Image
+                  width={150}
+                  height={300}
+                  className='welcomeImage'
+                  src={project.pictures[0].url}
+                  alt={`Image de ${project.name}`}
+                  style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
+                  priority
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleProjectClick(project.id);
+                    handleMainClick();
+                  }}
+                />
+              </div>
+            </div>
           </div>
         ))}
       </div>

@@ -12,21 +12,31 @@ export function isProjectVisible(ref) {
   if (!ref) return false;
 
   const rect = ref.getBoundingClientRect();
+  // Le conteneur est visible dès qu'il entre dans le viewport
   return (
-    rect.top <= window.innerHeight * (1 - VISIBILITY_THRESHOLD) &&
-    rect.bottom >= window.innerHeight * VISIBILITY_THRESHOLD
+    rect.top < window.innerHeight && // Le haut est visible (en dessous du haut de l'écran)
+    rect.bottom > 0 // Le bas est visible (au-dessus du bas de l'écran)
   );
 }
 
 /**
  * Trouve l'index du projet le plus haut actuellement visible
+ * Un projet est considéré comme "visible" si son centre est dans le viewport
  */
 export function findHighestVisibleProjectIndex(projectPicturesRefs) {
   let highestVisibleIndex = -1;
 
   for (let i = 0; i < projectPicturesRefs.current.length; i++) {
     const ref = projectPicturesRefs.current[i];
-    if (isProjectVisible(ref)) {
+    if (!ref) continue;
+
+    const rect = ref.getBoundingClientRect();
+    const centerY = rect.top + rect.height / 2;
+
+    // Le centre du projet doit être dans le viewport
+    const isCenterInViewport = centerY >= 0 && centerY <= window.innerHeight;
+
+    if (isCenterInViewport) {
       highestVisibleIndex = i;
     }
   }
@@ -42,8 +52,7 @@ export function createProjectLine(project, index) {
   line.className = 'project-line';
   line.textContent = project.name;
   line.style.opacity = '0';
-  line.style.transform = 'translateY(10px)';
-  line.style.transition = 'all 0.3s ease';
+  line.style.transition = 'opacity 0.3s ease';
   line.dataset.projectIndex = index;
   line.classList.add('appearing');
 
@@ -61,8 +70,19 @@ export function updateProjectStyles(projectsListRef) {
 
   projectLines.forEach((line, i) => {
     const isLast = i === total - 1;
-    line.style.opacity = '1';
-    line.style.color = isLast ? 'var(--text-primary)' : 'var(--text-secondary)';
+
+    // Si la ligne vient d'être ajoutée (classe 'appearing')
+    if (line.classList.contains('appearing')) {
+      // Utiliser setTimeout pour permettre au navigateur de peindre l'état initial
+      setTimeout(() => {
+        line.style.opacity = '1';
+        line.style.color = isLast ? 'var(--text-primary)' : 'var(--text-secondary)';
+        line.classList.remove('appearing');
+      }, 10);
+    } else {
+      // Pour les lignes déjà affichées, juste mettre à jour la couleur
+      line.style.color = isLast ? 'var(--text-primary)' : 'var(--text-secondary)';
+    }
   });
 }
 
