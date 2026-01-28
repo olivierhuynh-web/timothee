@@ -9,7 +9,7 @@ import SectionClickStickers from '../SectionClickStickers';
 const Articles = ({ clickStickers = [] }) => {
   const { openedProject, database } = useRefs();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [cursorDirection, setCursorDirection] = useState('default');
+  const [cursorDirection, setCursorDirection] = useState("url('/cursors/cursor-right.svg') 16 16, auto");
 
   // Trouve le projet correspondant à l'ID dans openedProject, ou le premier projet par défaut
   const project =
@@ -30,9 +30,9 @@ const Articles = ({ clickStickers = [] }) => {
     const mousePercentage = (mouseX / containerWidth) * 100;
 
     if (mousePercentage < 50) {
-      setCursorDirection('w-resize'); // Flèche vers la gauche
+      setCursorDirection("url('/cursors/cursor-left.svg') 16 16, auto"); // Flèche vers la gauche
     } else {
-      setCursorDirection('e-resize'); // Flèche vers la droite
+      setCursorDirection("url('/cursors/cursor-right.svg') 16 16, auto"); // Flèche vers la droite
     }
   };
 
