@@ -1,0 +1,12 @@
+# Ignore Next.js files - Railway should only deploy Strapi
+package.json
+package-lock.json
+node_modules/
+src/
+public/
+.next/
+.env.local
+next.config.js
+jsconfig.json
+tailwind.config.js
+postcss.config.mjs

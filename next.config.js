@@ -13,6 +13,16 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: '*.up.railway.app', // Railway domains
+        pathname: '/uploads/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com', // Cloudinary CDN
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'example.com',
         pathname: '/images/**',
       },
