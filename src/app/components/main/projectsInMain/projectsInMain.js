@@ -10,7 +10,23 @@ const ProjectsInMain = ({ handleMainClick }) => {
     handleProjectClick,
     database,
     projectsInMainRef,
+    isLoading,
   } = useRefs();
+
+  // Afficher un état de chargement si les données ne sont pas encore disponibles
+  if (isLoading || !database.projects || database.projects.length === 0) {
+    return (
+      <section
+        className={styles.projectsInMain__container}
+        ref={projectsInMainRef}
+      >
+        <div className={styles.projectsList} ref={projectsListRef}></div>
+        <div className={styles.projectsInMain__images}>
+          {/* État de chargement ou aucun projet */}
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
@@ -19,7 +35,13 @@ const ProjectsInMain = ({ handleMainClick }) => {
     >
       <div className={styles.projectsList} ref={projectsListRef}></div>
       <div className={styles.projectsInMain__images}>
-        {database.projects.map((project, idx) => (
+        {database.projects.map((project, idx) => {
+          // Vérifier que le projet a au moins une image
+          if (!project.pictures || project.pictures.length === 0) {
+            return null;
+          }
+
+          return (
           <div
             key={project.id}
             className={styles.projectsInMain__container__image__container}
@@ -45,7 +67,8 @@ const ProjectsInMain = ({ handleMainClick }) => {
               </div>
             </div>
           </div>
-        ))}
+        );
+        })}
       </div>
     </section>
   );

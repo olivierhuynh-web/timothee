@@ -7,19 +7,50 @@ import Stickers from '../main/stickers/stickers';
 import SectionClickStickers from '../SectionClickStickers';
 
 const Articles = ({ clickStickers = [] }) => {
-  const { openedProject, database } = useRefs();
+  const { openedProject, database, isLoading } = useRefs();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [cursorDirection, setCursorDirection] = useState("url('/cursors/cursor-right.svg') 16 16, auto");
+
+  // Réinitialiser l'index de l'image quand le projet change
+  // IMPORTANT: Les hooks doivent être appelés AVANT tout return conditionnel
+  useEffect(() => {
+    setCurrentImageIndex(0);
+  }, [openedProject]);
+
+  // Vérifier que les données sont chargées et qu'il y a au moins un projet
+  if (isLoading || !database.projects || database.projects.length === 0) {
+    return (
+      <div className={styles.articles}>
+        <SectionClickStickers clickStickers={clickStickers} />
+        <div className={styles.articles__container}>
+          {/* État de chargement */}
+        </div>
+        <div className={styles.articles__background}></div>
+        <div className={styles.articles__foreground}></div>
+        <ArticlesMenu />
+      </div>
+    );
+  }
 
   // Trouve le projet correspondant à l'ID dans openedProject, ou le premier projet par défaut
   const project =
     database.projects.find((p) => p.id === openedProject) ||
     database.projects[0];
 
-  // Réinitialiser l'index de l'image quand le projet change
-  useEffect(() => {
-    setCurrentImageIndex(0);
-  }, [openedProject]);
+  // Vérifier que le projet a des images
+  if (!project || !project.pictures || project.pictures.length === 0) {
+    return (
+      <div className={styles.articles}>
+        <SectionClickStickers clickStickers={clickStickers} />
+        <div className={styles.articles__container}>
+          {/* Aucune image disponible */}
+        </div>
+        <div className={styles.articles__background}></div>
+        <div className={styles.articles__foreground}></div>
+        <ArticlesMenu />
+      </div>
+    );
+  }
 
   // Gestionnaire de mouvement de souris pour changer le curseur
   const handleMouseMove = (e) => {

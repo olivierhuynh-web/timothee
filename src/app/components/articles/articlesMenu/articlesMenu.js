@@ -19,7 +19,12 @@ const ArticlesMenu = () => {
   return (
     <div className={styles.articlesMenu}>
       <div className={styles.articlesMenu__container} ref={articlesMenuRef}>
-        <button onClick={handleArticlesMenuClick}>Retour</button>
+        <button
+          onClick={handleArticlesMenuClick}
+          className={styles.articlesMenu__container__backButton}
+        >
+          Retour
+        </button>
         <div className={styles.articlesMenu__container__projectList}>
           <div
             className={styles.articlesMenu__container__projectList__container}

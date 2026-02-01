@@ -1,0 +1,19 @@
+services:
+  # Strapi CMS avec SQLite
+  strapi:
+    build:
+      context: ./strapi-backend
+      dockerfile: Dockerfile
+    container_name: timothee_strapi
+    restart: unless-stopped
+    ports:
+      - "1337:1337"
+    environment:
+      NODE_ENV: development
+    env_file:
+      - ./strapi-backend/.env.docker
+    volumes:
+      - ./strapi-backend:/app
+      - /app/node_modules
+      - /app/.cache
+      - /app/dist

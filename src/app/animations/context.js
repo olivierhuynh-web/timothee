@@ -1,8 +1,8 @@
 /**
  * Context pour gérer les refs et l'état global des animations
  */
-import React, { createContext, useContext, useRef, useState } from 'react';
-import database from '../db/database.json';
+import React, { createContext, useContext, useRef, useState, useEffect } from 'react';
+import { getProjects } from '../lib/strapi';
 import { useArticlesMenuAnimation } from './hooks/useArticlesMenuAnimation';
 import { useSectionSlider } from './hooks/useSectionSlider';
 
@@ -26,7 +26,21 @@ export function RefsProvider({ children }) {
   const [openedProject, setOpenedProject] = useState(null);
   const [visibleProjectIndex, setVisibleProjectIndex] = useState(null);
   const [currentProjectDescription, setCurrentProjectDescription] = useState('');
+  const [database, setDatabase] = useState({ projects: [] });
+  const [isLoading, setIsLoading] = useState(true);
   // const [scrollPositions, setScrollPositions] = useState({});
+
+  // Charger les projets depuis Strapi au montage du composant
+  useEffect(() => {
+    async function loadProjects() {
+      setIsLoading(true);
+      const projects = await getProjects();
+      setDatabase({ projects });
+      setIsLoading(false);
+    }
+
+    loadProjects();
+  }, []);
 
   // Gère le clic sur un projet
   const handleProjectClick = (projectId) => {
@@ -70,6 +84,7 @@ export function RefsProvider({ children }) {
         visibleProjectIndex,
         currentProjectDescription,
         database,
+        isLoading,
 
         // Setters
         setIsMainOpen,

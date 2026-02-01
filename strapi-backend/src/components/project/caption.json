@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_project_captions",
+  "info": {
+    "displayName": "Caption"
+  },
+  "options": {},
+  "attributes": {
+    "Text": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

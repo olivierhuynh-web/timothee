@@ -6,6 +6,12 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '1337',
+        pathname: '/uploads/**',
+      },
+      {
         protocol: 'https',
         hostname: 'example.com',
         pathname: '/images/**',
@@ -21,6 +27,8 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
+    dangerouslyAllowSVG: true,
+    unoptimized: process.env.NODE_ENV === 'development', // Désactive l'optimisation en dev pour localhost
   },
 
   async redirects() {
