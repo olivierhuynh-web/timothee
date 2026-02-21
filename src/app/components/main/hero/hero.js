@@ -25,7 +25,7 @@ const Hero = () => {
           alt='Image de bienvenue'
           width={600}
           height={300}
-          style={{ width: '30%', height: 'auto', objectFit: 'contain' }}
+          style={{ width: '37%', height: 'auto', objectFit: 'contain' }}
           priority
           className={styles.hero__container__welcomeImage}
           // ref={welcomeImageRef}

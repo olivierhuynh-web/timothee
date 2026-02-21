@@ -21,7 +21,7 @@ export function isProjectVisible(ref) {
 
 /**
  * Trouve l'index du projet le plus haut actuellement visible
- * Un projet est considéré comme "visible" si son centre est dans le viewport
+ * Un projet est considéré comme "visible" s'il occupe une partie significative du viewport
  */
 export function findHighestVisibleProjectIndex(projectPicturesRefs) {
   let highestVisibleIndex = -1;
@@ -31,12 +31,18 @@ export function findHighestVisibleProjectIndex(projectPicturesRefs) {
     if (!ref) continue;
 
     const rect = ref.getBoundingClientRect();
-    const centerY = rect.top + rect.height / 2;
+    const windowHeight = window.innerHeight;
 
-    // Le centre du projet doit être dans le viewport
-    const isCenterInViewport = centerY >= 0 && centerY <= window.innerHeight;
+    // Calculer la partie visible du projet
+    const visibleTop = Math.max(0, rect.top);
+    const visibleBottom = Math.min(windowHeight, rect.bottom);
+    const visibleHeight = Math.max(0, visibleBottom - visibleTop);
 
-    if (isCenterInViewport) {
+    // Le projet est visible s'il occupe au moins 20% du viewport
+    const visibilityRatio = visibleHeight / windowHeight;
+    const isVisible = visibilityRatio >= 0.2;
+
+    if (isVisible) {
       highestVisibleIndex = i;
     }
   }

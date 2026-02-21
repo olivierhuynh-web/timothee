@@ -113,7 +113,7 @@ const Articles = ({ clickStickers = [] }) => {
       {/* <Stickers /> */}
       <SectionClickStickers clickStickers={clickStickers} />
       <div className={styles.articles__container}>
-        <div className={styles.articles__container__wrapper} data-no-sticker>
+        <div className={styles.articles__container__wrapper} data-sticker-allowed>
           <div className={styles.articles__container__wrapper__project}>
             <div
               className={styles.articles__container__wrapper__project__heading}

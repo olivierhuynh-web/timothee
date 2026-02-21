@@ -121,17 +121,28 @@ export function useProjectsListScroll(
   setVisibleProjectIndex
 ) {
   useEffect(() => {
+    // Ne pas démarrer si pas de projets
+    if (!database.projects || database.projects.length === 0) {
+      return;
+    }
+
     let cleanup;
 
-    // Attend que les refs soient prêtes
+    // Attend que les refs soient prêtes (après le rendu des images)
     const timer = setTimeout(() => {
+      // Vérifier que les refs sont bien remplies
+      const hasRefs = projectPicturesRefs.current.some(ref => ref !== null);
+      if (!hasRefs) {
+        return;
+      }
+
       cleanup = projectsListScrollEffect(
         projectPicturesRefs,
         projectsListRef,
         database,
         setVisibleProjectIndex
       );
-    }, 100);
+    }, 200); // Augmenté à 200ms pour laisser le temps au rendu
 
     return () => {
       clearTimeout(timer);
