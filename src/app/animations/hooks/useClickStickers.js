@@ -1,17 +1,62 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useRefs } from '../context';
+
+// Cache global pour les images préchargées (partagé entre toutes les instances)
+const preloadedImages = new Map();
+let lastPreloadedPaths = null;
+
+// Fonction de préchargement silencieux
+const preloadStickers = (paths) => {
+  // Ne précharge que si les paths ont changé
+  if (lastPreloadedPaths === paths || !paths.length) return;
+  lastPreloadedPaths = paths;
+
+  paths.forEach((path) => {
+    if (!preloadedImages.has(path)) {
+      const img = new Image();
+      img.src = path;
+      img.onload = () => preloadedImages.set(path, img);
+    }
+  });
+};
 
 export const useClickStickers = (sectionRef, sectionName) => {
   const [clickStickers, setClickStickers] = useState([]);
+  const { stickerPaths } = useRefs();
 
-  // Liste de tous les stickers disponibles
-  const stickerPaths = Array.from({ length: 27 }, (_, i) => `/stickers/${i + 1}.png`);
+  // Fallback vers les stickers statiques si aucun sticker n'est chargé
+  const activeStickerPaths = stickerPaths.length > 0
+    ? stickerPaths
+    : Array.from({ length: 27 }, (_, i) => `/stickers/${i + 1}.png`);
+
+  // Précharge les stickers quand ils sont disponibles
+  useEffect(() => {
+    if (activeStickerPaths.length > 0) {
+      preloadStickers(activeStickerPaths);
+    }
+  }, [activeStickerPaths]);
 
   useEffect(() => {
     if (!sectionRef?.current) return;
 
     const handleClick = (e) => {
+      // Vérifie si le clic est dans une zone interdite (data-no-sticker)
+      // ou si on est dans articles et pas dans la zone autorisée (data-sticker-allowed)
+      const clickedElement = e.target;
+      const isInNoStickerZone = clickedElement.closest('[data-no-sticker]');
+      const isInArticlesSection = sectionName === 'articles';
+
+      if (isInArticlesSection) {
+        // Dans articles, on ne peut coller que dans les zones avec data-sticker-allowed
+        const isInAllowedZone = clickedElement.closest('[data-sticker-allowed]');
+        if (!isInAllowedZone) return;
+      } else if (isInNoStickerZone) {
+        // Dans les autres sections, on bloque les zones avec data-no-sticker
+        return;
+      }
+
       // Sélectionne un sticker aléatoire
-      const randomSticker = stickerPaths[Math.floor(Math.random() * stickerPaths.length)];
+      const randomSticker = activeStickerPaths[Math.floor(Math.random() * activeStickerPaths.length)];
 
       // Rotation aléatoire entre -15 et 15 degrés
       const rotation = Math.random() * 30 - 15;
@@ -58,7 +103,7 @@ export const useClickStickers = (sectionRef, sectionName) => {
     return () => {
       section.removeEventListener('click', handleClick);
     };
-  }, [sectionRef, sectionName]);
+  }, [sectionRef, sectionName, activeStickerPaths]);
 
   return { clickStickers, setClickStickers };
 };

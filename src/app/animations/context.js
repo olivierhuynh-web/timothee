@@ -2,7 +2,7 @@
  * Context pour gérer les refs et l'état global des animations
  */
 import React, { createContext, useContext, useRef, useState, useEffect } from 'react';
-import { getProjects } from '../lib/strapi';
+import { getProjects, getStickers } from '../lib/strapi';
 import { useArticlesMenuAnimation } from './hooks/useArticlesMenuAnimation';
 import { useSectionSlider } from './hooks/useSectionSlider';
 
@@ -28,18 +28,26 @@ export function RefsProvider({ children }) {
   const [currentProjectDescription, setCurrentProjectDescription] = useState('');
   const [database, setDatabase] = useState({ projects: [] });
   const [isLoading, setIsLoading] = useState(true);
+  const [stickerPaths, setStickerPaths] = useState([]);
   // const [scrollPositions, setScrollPositions] = useState({});
 
-  // Charger les projets depuis Strapi au montage du composant
+  // Charger les projets et stickers depuis Strapi au montage du composant
   useEffect(() => {
-    async function loadProjects() {
+    async function loadData() {
       setIsLoading(true);
-      const projects = await getProjects();
+
+      // Charger en parallèle pour plus de performance
+      const [projects, stickers] = await Promise.all([
+        getProjects(),
+        getStickers(),
+      ]);
+
       setDatabase({ projects });
+      setStickerPaths(stickers);
       setIsLoading(false);
     }
 
-    loadProjects();
+    loadData();
   }, []);
 
   // Gère le clic sur un projet
@@ -85,6 +93,7 @@ export function RefsProvider({ children }) {
         currentProjectDescription,
         database,
         isLoading,
+        stickerPaths,
 
         // Setters
         setIsMainOpen,

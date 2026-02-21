@@ -120,3 +120,51 @@ function getImageUrl(fileData) {
 
   return url;
 }
+
+/**
+ * Récupère tous les stickers depuis Strapi
+ */
+export async function getStickers() {
+  try {
+    const response = await fetch(`${STRAPI_URL}/api/stickers?populate=image`, {
+      cache: 'no-store',
+    });
+
+    if (!response.ok) {
+      throw new Error(`Erreur API: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (!data.data || !Array.isArray(data.data)) {
+      throw new Error('Format de données invalide');
+    }
+
+    // Extraire les URLs des images
+    return data.data.map(sticker => {
+      const attributes = sticker.attributes || sticker;
+      const imageData = attributes.image;
+
+      // Gérer les différentes structures possibles de Strapi v5
+      let imageUrl = '';
+      if (imageData) {
+        if (imageData.url) {
+          imageUrl = imageData.url;
+        } else if (imageData.data?.attributes?.url) {
+          imageUrl = imageData.data.attributes.url;
+        }
+      }
+
+      // Si l'URL est relative, ajouter le domaine Strapi
+      if (imageUrl && imageUrl.startsWith('/')) {
+        return `${STRAPI_URL}${imageUrl}`;
+      }
+
+      return imageUrl;
+    }).filter(url => url); // Filtrer les URLs vides
+  } catch (error) {
+    console.error('Erreur lors de la récupération des stickers:', error);
+    // Fallback vers les stickers statiques
+    return Array.from({ length: 27 }, (_, i) => `/stickers/${i + 1}.png`);
+  }
+}
