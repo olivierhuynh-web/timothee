@@ -51,8 +51,9 @@ const ProjectsInMain = ({ handleMainClick }) => {
               <div className={styles.imageShadow}></div>
               <div className={styles.imageContent}>
                 <Image
-                  width={150}
-                  height={300}
+                  width={1200}
+                  height={1200}
+                  quality={90}
                   className='welcomeImage'
                   src={project.pictures[0].url}
                   alt={`Image de ${project.name}`}

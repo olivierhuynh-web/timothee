@@ -9,7 +9,6 @@ import Main from './components/main/main';
 import Articles from './components/articles/articles';
 import { RefsProvider, useRefs } from './animations/context';
 import { useProjectsListScroll } from './animations/hooks/useProjectsListScroll';
-import { useClickStickers } from './animations/hooks/useClickStickers';
 import effectsOnLinkClick from './animations/effectsOnLinkClick';
 
 function HomeContent() {
@@ -27,6 +26,11 @@ function HomeContent() {
     setVisibleProjectIndex,
     currentProjectDescription,
     setCurrentProjectDescription,
+    // Click Stickers centralisés
+    mainClickStickers,
+    sidebarClickStickers,
+    articlesClickStickers,
+    addClickSticker,
   } = useRefs();
 
   const { distributeStickers } = effectsOnLinkClick();
@@ -34,10 +38,10 @@ function HomeContent() {
   const overlayRef = useRef(null);
   const pendingLinkRef = useRef(null);
 
-  // Hooks pour les stickers au clic par section
-  const { clickStickers: mainClickStickers } = useClickStickers(mainRef, 'main');
-  const { clickStickers: sidebarClickStickers } = useClickStickers(sidebarRef, 'sidebar');
-  const { clickStickers: articlesClickStickers } = useClickStickers(articlesRef, 'articles');
+  // Gestionnaires de clic pour les stickers (avec gestion des frontières)
+  const handleMainStickerClick = (e) => addClickSticker(e, 'main', mainRef);
+  const handleSidebarStickerClick = (e) => addClickSticker(e, 'sidebar', sidebarRef);
+  const handleArticlesStickerClick = (e) => addClickSticker(e, 'articles', articlesRef);
 
   // Activer l'effet de scroll pour les projets
   useProjectsListScroll(
@@ -155,17 +159,17 @@ function HomeContent() {
         ))}
       </div>
       <div className={styles.wrapper} ref={wrapperRef}>
-        <div ref={mainRef} className={styles.main}>
+        <div ref={mainRef} className={styles.main} onClick={handleMainStickerClick}>
           <Main clickStickers={mainClickStickers} />
         </div>
-        <div ref={sidebarRef} className={styles.sidebar}>
+        <div ref={sidebarRef} className={styles.sidebar} onClick={handleSidebarStickerClick}>
           <Sidebar
             onLinkClick={handleAddStickers}
             clickStickers={sidebarClickStickers}
             projectDescription={currentProjectDescription}
           />
         </div>
-        <div ref={articlesRef} className={styles.articles}>
+        <div ref={articlesRef} className={styles.articles} onClick={handleArticlesStickerClick}>
           <Articles clickStickers={articlesClickStickers} />
         </div>
       </div>

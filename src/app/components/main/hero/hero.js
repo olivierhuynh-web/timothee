@@ -23,8 +23,9 @@ const Hero = () => {
         <Image
           src='/images/herisson.png'
           alt='Image de bienvenue'
-          width={600}
-          height={300}
+          width={1200}
+          height={1200}
+          quality={90}
           style={{ width: '37%', height: 'auto', objectFit: 'contain' }}
           priority
           className={styles.hero__container__welcomeImage}
@@ -34,8 +35,9 @@ const Hero = () => {
         <Image
           src='/images/face.jpeg'
           alt='Image de bienvenue'
-          width={600}
-          height={300}
+          width={1200}
+          height={1200}
+          quality={90}
           style={{ width: '30%', height: 'auto', objectFit: 'contain' }}
           priority
           className={styles.hero__container__secondImage}
