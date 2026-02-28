@@ -23,7 +23,7 @@ const ArticlesMenu = () => {
           onClick={handleArticlesMenuClick}
           className={styles.articlesMenu__container__backButton}
         >
-          Retour
+          <img src="/images/return-button.svg" alt="Retour" />
         </button>
         <div className={styles.articlesMenu__container__projectList}>
           <div

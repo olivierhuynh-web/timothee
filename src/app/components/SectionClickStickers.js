@@ -45,8 +45,8 @@ const SectionClickStickers = ({ clickStickers }) => {
     if (clickStickers.length > 0 && overlayRef.current) {
       const newClickStickers = Array.from(
         overlayRef.current.querySelectorAll(
-          `.${styles.clickSticker}:not([data-animated="true"])`
-        )
+          `.${styles.clickSticker}:not([data-animated="true"])`,
+        ),
       );
 
       if (newClickStickers.length > 0) {
@@ -73,7 +73,7 @@ const SectionClickStickers = ({ clickStickers }) => {
                   });
                 }, 2000);
               },
-            }
+            },
           );
         });
       }
@@ -96,8 +96,8 @@ const SectionClickStickers = ({ clickStickers }) => {
             top: `${sticker.y}px`,
             transform: `rotate(${sticker.rotation}deg) scale(${sticker.scale})`,
             zIndex: 200,
-            width: '100px',
-            height: '100px',
+            width: '125px',
+            height: '125px',
             pointerEvents: 'none',
           }}
         >

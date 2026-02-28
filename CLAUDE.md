@@ -32,6 +32,27 @@ Development server runs on http://localhost:3000 by default.
 - **GSAP 3.13** for animations
 - **Lenis** (@studio-freight/lenis + lenis) for smooth scrolling
 - **SCSS modules** for styling
+- **Strapi CMS** for content management
+
+### Backend (Strapi CMS)
+
+- **URL Production** : `https://timothee-production.up.railway.app`
+- **Admin** : `/admin`
+- **Base de données** : PostgreSQL (Railway)
+- **Stockage images** : Cloudinary
+
+**Content Types :**
+- `Project` : Projets du portfolio (name, description, images)
+- `Sticker` : Stickers cliquables (name, image)
+
+**API Endpoints :**
+- `GET /api/projects?populate[images][populate][0]=file&populate[images][populate][1]=captions`
+- `GET /api/stickers?populate=image`
+
+### Strapi API (`src/app/lib/strapi.js`)
+
+- `getProjects()` - Récupère les projets depuis Strapi
+- `getStickers()` - Récupère les stickers (fallback vers `/public/stickers/` si erreur)
 
 ### Application Structure
 
@@ -65,7 +86,8 @@ This is the central nervous system of the application. It provides:
 **State:**
 - `isMainOpen` - Controls whether Main or Articles section is visible
 - `openedProject` - Currently selected project ID
-- `database` - Project data from `src/app/db/database.json`
+- `database` - Project data fetched from Strapi API
+- `stickerPaths` - Array of sticker image paths from Strapi (or fallback)
 
 **Key Animations:**
 - `slideToTheRightOnTheScreen()` - Slides wrapper left, reveals Articles section (100vw)
@@ -75,17 +97,28 @@ This is the central nervous system of the application. It provides:
 
 ### Data Structure
 
-Projects data lives in `src/app/db/database.json`:
-```json
+Project data is fetched from Strapi CMS and transformed for the app:
+
+**Strapi Response → App Format:**
+```javascript
+// Strapi returns:
 {
-  "projects": [
-    {
-      "id": "string",
-      "name": "string",
-      "description": "string",
-      "pictures": ["url1", "url2", ...]
-    }
-  ]
+  data: [{
+    id: 1,
+    name: "Project Name",
+    description: "...",
+    images: [{ file: { url: "..." }, captions: [...] }]
+  }]
+}
+
+// Transformed to:
+{
+  projects: [{
+    id: "1",
+    name: "Project Name",
+    description: "...",
+    pictures: ["https://cloudinary.../image.jpg", ...]
+  }]
 }
 ```
 
@@ -96,6 +129,12 @@ The project uses `@/*` as an alias for `./src/*` (configured in jsconfig.json).
 ### Internationalization
 
 The app is configured for French (`fr`) as default locale with English (`en`) support in `next.config.js`, though i18n implementation is not yet active.
+
+## Deployment
+
+- **Frontend** : Vercel (auto-deploy depuis GitHub)
+- **Backend Strapi** : Railway (auto-deploy depuis GitHub)
+- **Variable env** : `NEXT_PUBLIC_STRAPI_URL`
 
 ## Key Patterns
 
@@ -118,9 +157,17 @@ The `projectsListScrollEffect` in `context.js` is a sophisticated system that:
 ### SVG Support
 Webpack is configured to import SVG files as React components using `@svgr/webpack`.
 
+## MCP Servers
+
+### Chrome DevTools
+Permet le contrôle du navigateur pour tests et debug.
+- Screenshots et snapshots de page
+- Évaluation de scripts JavaScript
+- Navigation et interaction (click, fill, hover)
+- Inspection des éléments
+
 ## Important Notes
 
-- The app is **not** a git repository at the project root (as of last check)
 - Comments and console.logs are in French
 - There are TODO markers in the code, particularly around ArticlesMenu animations that may need refinement
 - The project uses both `lenis` packages (`@studio-freight/lenis` and `lenis`) - verify if both are necessary
