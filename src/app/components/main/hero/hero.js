@@ -1,50 +1,39 @@
 'use client';
-import React from 'react';
 import Image from 'next/image';
 import styles from './hero.module.scss';
-// import { gsap } from 'gsap';
-// import { heroAnimations } from './animations';
+
+const HERO_IMAGES = [
+  {
+    src: '/images/herisson.png',
+    alt: 'Image de bienvenue',
+    width: '37%',
+    className: styles.hero__container__welcomeImage,
+  },
+  {
+    src: '/images/face.jpeg',
+    alt: 'Image de bienvenue',
+    width: '30%',
+    className: styles.hero__container__secondImage,
+  },
+];
 
 const Hero = () => {
-  // const welcomeImageRef = useRef(null);
-  // const magazineImageRef = useRef(null);
-
-  // useEffect(() => {
-  //   const context = gsap.context(() => {
-  //     heroAnimations(welcomeImageRef, magazineImageRef);
-  //   });
-
-  //   return () => context.revert();
-  // }, []);
-
   return (
-    <>
-      <div className={styles.hero__container}>
+    <div className={styles.hero__container}>
+      {HERO_IMAGES.map((image) => (
         <Image
-          src='/images/herisson.png'
-          alt='Image de bienvenue'
+          key={image.src}
+          src={image.src}
+          alt={image.alt}
           width={1200}
           height={1200}
           quality={90}
-          style={{ width: '37%', height: 'auto', objectFit: 'contain' }}
           priority
-          className={styles.hero__container__welcomeImage}
-          // ref={welcomeImageRef}
+          className={image.className}
+          style={{ width: image.width, height: 'auto', objectFit: 'contain' }}
         />
-
-        <Image
-          src='/images/face.jpeg'
-          alt='Image de bienvenue'
-          width={1200}
-          height={1200}
-          quality={90}
-          style={{ width: '30%', height: 'auto', objectFit: 'contain' }}
-          priority
-          className={styles.hero__container__secondImage}
-          // ref={welcomeImageRef}
-        />
-      </div>
-    </>
+      ))}
+    </div>
   );
 };
 

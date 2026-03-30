@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-
 const effectsOnLinkClick = () => {
-  // Génère les chemins des 27 stickers et les stocke dans un useState
-  const [stickers, setStickers] = useState(
-    Array.from({ length: 27 }, (_, i) => `/stickers/${i + 1}.png`)
+  const stickers = Array.from(
+    { length: 27 },
+    (_, i) => `/stickers/${i + 1}.png`
   );
 
   // Fais une répartition aléatoire dans une zone définie
@@ -47,7 +45,6 @@ const effectsOnLinkClick = () => {
   };
 
   return { distributeStickers };
-
 };
 
 export default effectsOnLinkClick;

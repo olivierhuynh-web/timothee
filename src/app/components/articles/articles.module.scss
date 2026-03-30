@@ -12,12 +12,12 @@
     height: 100vh;
     &__wrapper {
       position: relative;
-      width: 75vw;
+      width: 80vw;
       height: 80vh;
       background-color: var(--card-background);
       border: 0.5px solid black;
       z-index: 1;
-
+      margin-top: 10vh;
       transition: background-color 0.3s ease;
       display: flex;
       align-items: center;
@@ -60,6 +60,8 @@
           color: var(--text-color);
           font-size: 1rem;
           line-height: 1;
+          font-family: 'Alegreya', serif;
+          font-style: italic;
         }
       }
     }

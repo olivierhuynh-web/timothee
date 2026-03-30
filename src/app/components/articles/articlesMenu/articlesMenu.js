@@ -9,8 +9,8 @@ const ArticlesMenu = () => {
     setOpenedProject,
     database,
   } = useRefs();
+  const projects = database.projects || [];
 
-  // Gère le clic sur un projet dans le menu
   const handleProjectClick = (projectId, e) => {
     e.stopPropagation();
     setOpenedProject(projectId);
@@ -34,7 +34,7 @@ const ArticlesMenu = () => {
                 styles.articlesMenu__container__projectList__container__wrapper
               }
             >
-              {database.projects.map((project) => {
+              {projects.map((project) => {
                 const isSelected = project.id === openedProject;
                 return (
                   <span

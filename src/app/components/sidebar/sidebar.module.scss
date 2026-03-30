@@ -13,6 +13,8 @@
     overflow: hidden;
 
     &__header {
+      font-family: 'ArchivoBlack', Arial, sans-serif;
+      line-height: 1.3;
       &__firstline {
         display: flex;
         justify-content: space-between;
@@ -41,6 +43,8 @@
 
         p {
           transition: opacity 0.3s ease;
+          font-family: 'ArchivoBlack', Arial, sans-serif;
+          line-height: 1.3;
         }
       }
     }

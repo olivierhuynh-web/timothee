@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  turbopack: {}, // Active Turbopack proprement
+  turbopack: {},
   reactStrictMode: true,
 
   images: {
@@ -13,42 +13,17 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: '*.up.railway.app', // Railway domains
+        hostname: '*.up.railway.app',
         pathname: '/uploads/**',
       },
       {
         protocol: 'https',
-        hostname: 'res.cloudinary.com', // Cloudinary CDN
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'example.com',
-        pathname: '/images/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'cdn.example.com',
-        pathname: '/assets/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'picsum.photos',
+        hostname: 'res.cloudinary.com',
         pathname: '/**',
       },
     ],
     dangerouslyAllowSVG: true,
-    unoptimized: process.env.NODE_ENV === 'development', // Désactive l'optimisation en dev pour localhost
-  },
-
-  async redirects() {
-    return [
-      {
-        source: '/old-route',
-        destination: '/new-route',
-        permanent: true,
-      },
-    ];
+    unoptimized: process.env.NODE_ENV === 'development',
   },
 };
 

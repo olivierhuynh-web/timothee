@@ -1,3 +1,31 @@
+@font-face {
+  font-family: 'ArchivoBlack';
+  src: url('/font/ArchivoBlack-Regular_1.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ArchivoBlack';
+  src: url('/font/ArchivoBlack-Italic_1.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Alegreya';
+  src: url('/font/Alegreya-Regular_1.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Alegreya';
+  src: url('/font/Alegreya-Italic_1.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+
 :root {
   /* Light Mode Variables */
   --background: #fafafa;
@@ -39,6 +67,11 @@ html.lenis {
 
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
+}
+
+::selection {
+  background: #000000;
+  color: #ffffff;
 }
 
 /* Base styles */
@@ -145,6 +178,13 @@ html, body {
   background: var(--background);
   color: var(--foreground);
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  html, body {
+    height: auto;
+    min-height: 100%;
+  }
 }
 
 body {

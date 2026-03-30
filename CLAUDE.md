@@ -30,7 +30,7 @@ Development server runs on http://localhost:3000 by default.
 - **Next.js 15** with App Router
 - **React 19** (client components)
 - **GSAP 3.13** for animations
-- **Lenis** (@studio-freight/lenis + lenis) for smooth scrolling
+- **Lenis** (`lenis`) for smooth scrolling
 - **SCSS modules** for styling
 - **Strapi CMS** for content management
 
@@ -126,10 +126,6 @@ Project data is fetched from Strapi CMS and transformed for the app:
 
 The project uses `@/*` as an alias for `./src/*` (configured in jsconfig.json).
 
-### Internationalization
-
-The app is configured for French (`fr`) as default locale with English (`en`) support in `next.config.js`, though i18n implementation is not yet active.
-
 ## Deployment
 
 - **Frontend** : Vercel (auto-deploy depuis GitHub)
@@ -170,4 +166,4 @@ Permet le contrôle du navigateur pour tests et debug.
 
 - Comments and console.logs are in French
 - There are TODO markers in the code, particularly around ArticlesMenu animations that may need refinement
-- The project uses both `lenis` packages (`@studio-freight/lenis` and `lenis`) - verify if both are necessary
+- `npm run lint` still relies on `next lint` and is not fully configured yet
